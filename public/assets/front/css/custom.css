@@ -1,0 +1,312 @@
+html.with-background {
+    background-image: url('https://www.korinatour.co.id/wp-content/uploads/2017/05/Objek-Wisata-Pura-Ulun-Danu-Bedugul-Facebook.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+html.with-background body {
+    background: rgba(0,0,0,0.5);
+}
+
+body {
+    min-height: 100vh;
+    padding: 56px 0 3rem;
+}
+
+#content {
+    min-height: 100vh;
+}
+
+.hero {
+    padding: 5em 0;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1000;
+}
+
+.hero h1 {
+    color: #fff !important;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 0;
+}
+
+#swiper-menu {
+    width: 900px;
+    margin: auto;
+    height: 282px;
+}
+
+.card-upacara {
+    padding: 3rem;
+}
+
+.gradient-image{
+  width: 80%;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.gradient-container {
+  text-align: center;
+  padding: 10px 20px;
+}
+
+.gradient-1 {
+    background: #70e1f5;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom right, #ffd194, #70e1f5);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom right, #ffd194, #70e1f5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.gradient-2 {
+    background: #7F7FD5;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom right, #91EAE4, #86A8E7, #7F7FD5);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom right, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.gradient-3 {
+    background: #F0C27B;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom right, #4B1248, #F0C27B);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom right, #4B1248, #F0C27B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.gradient-4 {
+    background: #FBD3E9;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom right, #BB377D, #FBD3E9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom right, #BB377D, #FBD3E9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.gradient-5 {
+    background: #f2709c;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom right, #ff9472, #f2709c);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom right, #ff9472, #f2709c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.card-upacara a {
+    text-decoration: none;
+    color: #fff;
+}
+
+#swiper-menu .swiper-button-next, #swiper-menu .swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    width: 27px;
+    height: 44px;
+    margin-top: -22px;
+    z-index: 10;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #fff;
+    background-size: 16px 44px;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 250ms;
+}
+
+#swiper-menu .swiper-button-next {
+    right: -48px;
+}
+
+#swiper-menu .swiper-button-prev {
+    left: -48px;
+}
+
+#swiper-menu:hover .swiper-button-next {
+    right: 16px;
+}
+
+#swiper-menu:hover .swiper-button-prev {
+    left: 16px;
+}
+
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+    padding-left: 10px;
+}
+ul.timeline:before {
+    content: ' ';
+    background: #d4d9df;
+    display: inline-block;
+    position: absolute;
+    left: 11px;
+    width: 2px;
+    height: 100%;
+    z-index: 400;
+}
+ul.timeline > li {
+    margin: 24px 0;
+    padding-left: 24px;
+}
+ul.timeline > li:before {
+    content: ' ';
+    background: white;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #22c0e8;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    z-index: 400;
+}
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+.pagination > li {
+  display: inline;
+}
+.pagination > li > a,
+.pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  text-decoration: none;
+  color: #337ab7;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-left: -1px;
+}
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  margin-left: 0;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  z-index: 2;
+  color: #23527c;
+  background-color: #eeeeee;
+  border-color: #ddd;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 3;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+  cursor: default;
+}
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+  color: #777777;
+  background-color: #fff;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+.pagination-lg > li > a,
+.pagination-lg > li > span {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+}
+.pagination-lg > li:first-child > a,
+.pagination-lg > li:first-child > span {
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+}
+.pagination-lg > li:last-child > a,
+.pagination-lg > li:last-child > span {
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.pagination-sm > li > a,
+.pagination-sm > li > span {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.pagination-sm > li:first-child > a,
+.pagination-sm > li:first-child > span {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.pagination-sm > li:last-child > a,
+.pagination-sm > li:last-child > span {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.cardmix {
+  display: block;
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: box-shadow 250ms ease;
+}
+
+.cardmix:hover {
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.25);
+}
+
+.cardmix > .fa {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: calc(50% - 28px);
+  color: #ccc;
+  text-shadow: 0px 2px 4px rgba(0,0,0,0.15);
+}
+
+.cardmix > .cardmix-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  vertical-align: bottom;
+  padding: 8px;
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(transparent, rgba(0,0,0,0.5));
+}
+
+.cardmix > .btn-cardmix {
+  position: absolute;
+  right: 8px;
+  bottom: -48px;
+  z-index: 1000000;
+  transition: all 250ms;
+}
+
+.cardmix:hover > .btn-cardmix {
+  bottom: 8px;
+}

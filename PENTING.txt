@@ -1,0 +1,4 @@
+Untuk menu admin 
+Silahkan tambahkan : "/admin" pada URL untuk mengakses data dan modelforest data tersebut
+
+Tampilan awal merupakan untuk pengguna umum (masyarakat)
