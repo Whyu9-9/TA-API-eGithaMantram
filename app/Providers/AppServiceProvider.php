@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
         $tag = Tag::all();
         $data['kategori']=$kategori;
         $data['tag']=$tag;
-         view()->share('data', $data);
+        view()->share('data', $data);
     }
 
     /**
