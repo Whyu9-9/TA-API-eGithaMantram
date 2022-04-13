@@ -48,11 +48,11 @@ class MantramListController extends Controller
             );
         }
 
-        $arr = [
-            "data" => $new_mantram
-        ];
+        // $arr = [
+        //     "data" => $new_mantram
+        // ];
 
-        return response()->json($arr);
+        return response()->json($new_mantram);
     }
 
     public function detailMantram($id_post)

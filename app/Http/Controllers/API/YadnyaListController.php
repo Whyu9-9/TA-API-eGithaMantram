@@ -271,4 +271,8 @@ class YadnyaListController extends Controller
 
         return response()->json($data);
     }
+
+    public function setProsesiPositionUp($id_post, $id_pros){
+
+    }
 }

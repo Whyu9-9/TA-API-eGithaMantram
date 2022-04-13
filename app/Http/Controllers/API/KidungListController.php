@@ -48,11 +48,11 @@ class KidungListController extends Controller
             );
         }
 
-        $arr = [
-            "data" => $new_kidung
-        ];
+        // $arr = [
+        //     "data" => $new_kidung
+        // ];
 
-        return response()->json($arr);
+        return response()->json($new_kidung);
     }
 
     public function detailKidung($id_post)
