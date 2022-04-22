@@ -29,6 +29,37 @@ class ProsesiListController extends Controller
 
         return response()->json($new_tabuh);
     }
+ 
+    public function detailProsesiCopyReference($id_parent_post, $id_post)
+    {
+        $data_det_pros = M_Det_Post::where('tb_detil_post.id_post', $id_parent_post)
+                                    ->where('tb_detil_post.id_tag', '3')
+                                    ->where('tb_detil_post.spesial',$id_post)
+                                    ->leftJoin('tb_tag', 'tb_detil_post.id_tag', '=', 'tb_tag.id_tag')
+                                    ->leftJoin('tb_post', 'tb_detil_post.id_parent_post', '=', 'tb_post.id_post')
+                                    ->select('tb_detil_post.id_det_post', 
+                                            'tb_post.nama_post', 
+                                            'tb_post.gambar', 
+                                            'tb_detil_post.id_post', 
+                                            'tb_detil_post.id_parent_post', 
+                                            'tb_detil_post.id_tag')
+                                    ->get();
+        if(count($data_det_pros) > 0){
+            foreach ($data_det_pros as $dp) {
+                $new_prosesi[] = (object) array(
+                    'id_post'        => $dp->id_post,
+                    'id_child_post' => $dp->id_parent_post,
+                    'nama_post'      => $dp->nama_post,
+                    'gambar'         => $dp->gambar,
+                    'id_tag'         => $dp->id_tag,
+                );
+            }
+        }else{
+            $new_prosesi = [];
+        }
+
+        return response()->json($new_prosesi);
+    }
 
     public function detailProsesi($id_post)
     {
@@ -43,6 +74,191 @@ class ProsesiListController extends Controller
 
         return response()->json($detail_post);
     }
+
+    public function detailGamelan($id_post)
+    {
+        $det_pros = M_Tag::distinct()
+                                ->where('tb_detil_post.id_post', $id_post)
+                                ->where('tb_detil_post.id_tag', '1')
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',)
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'gambar'    => $d_pros->gambar,
+                );
+            }
+
+            $data = [
+                'data' => $new_pros,
+            ];
+        } else {
+            $data = [
+                'data' => [],
+            ];
+        }
+
+
+        return response()->json($data);
+    }
+
+    public function detailTari($id_post)
+    {
+        $det_pros = M_Tag::distinct()
+                                ->where('tb_detil_post.id_post', $id_post)
+                                ->where('tb_detil_post.id_tag', '2')
+                                ->where('tb_detil_post.spesial', null)
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',)
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'gambar'    => $d_pros->gambar,
+                );
+            }
+
+            $data = [
+                'data' => $new_pros,
+            ];
+        } else {
+            $data = [
+                'data' => [],
+            ];
+        }
+
+
+        return response()->json($data);
+    }
+
+    public function detailKidung($id_post)
+    {
+        $det_pros = M_Tag::distinct()
+                                ->where('tb_detil_post.id_post', $id_post)
+                                ->where('tb_detil_post.id_tag', '4')
+                                ->where('tb_detil_post.spesial', null)
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',)
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'gambar'    => $d_pros->gambar,
+                );
+            }
+
+            $data = [
+                'data' => $new_pros,
+            ];
+        } else {
+            $data = [
+                'data' => [],
+            ];
+        }
+
+
+        return response()->json($data);
+    }
+
+    public function detailTabuh($id_post)
+    {
+        $det_pros = M_Tag::distinct()
+                                ->where('tb_detil_post.id_post', $id_post)
+                                ->where('tb_detil_post.id_tag', '5')
+                                ->where('tb_detil_post.spesial', null)
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',)
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'gambar'    => $d_pros->gambar,
+                );
+            }
+
+            $data = [
+                'data' => $new_pros,
+            ];
+        } else {
+            $data = [
+                'data' => [],
+            ];
+        }
+
+
+        return response()->json($data);
+    }
+
+    public function detailMantram($id_post)
+    {
+        $det_pros = M_Tag::distinct()
+                                ->where('tb_detil_post.id_post', $id_post)
+                                ->where('tb_detil_post.id_tag', '6')
+                                ->where('tb_detil_post.spesial', null)
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',)
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'gambar'    => $d_pros->gambar,
+                );
+            }
+
+            $data = [
+                'data' => $new_pros,
+            ];
+        } else {
+            $data = [
+                'data' => [],
+            ];
+        }
+
+
+        return response()->json($data);
+    }
+
 
     public function detailGamelanProsesiCopyReference($id_parent_post, $id_post)
     {
@@ -72,7 +288,34 @@ class ProsesiListController extends Controller
             $new_ting = [];
         }
 
-        return response()->json($new_ting);
+        $det_pros = M_Tag::where('tb_detil_post.id_post', $id_post)
+                                ->where('tb_detil_post.id_tag', '1')
+                                ->where('tb_detil_post.spesial','=',null)
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',)
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'gambar'    => $d_pros->gambar,
+                );
+            }
+
+        } else {
+            $new_pros = [];
+        }
+
+        $newArr = array_unique(array_merge($new_ting, $new_pros));
+
+        return response()->json($newArr);
     }
 
     public function detailGamelanProsesi($id_post)

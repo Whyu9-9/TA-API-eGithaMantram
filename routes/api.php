@@ -15,10 +15,21 @@ use Illuminate\Http\Request;
 
 Route::group(['as' => 'admin'], function () {
     Route::post('/login', 'AuthAdminController@login');
+
+    #yadnya
+    Route::get('/admin/listyadnya','Admin\HomeController@listYadnyaMaster');
+    Route::get('/admin/yadnya/{nama_yadnya}','Admin\HomeController@selectedHomeYadnya');
+
+
+    #mantram
+    Route::get('/admin/listallmantram','Admin\MantramController@listAllMantramAdmin');
+    Route::get('/admin/detailmantram/{id_post}','Admin\MantramController@detailMantramAdmin');
+    Route::post('/admin/createmantram','Admin\MantramController@createMantram');
 });
 
 Route::group(['as' => 'user'], function () {
     #yadnya
+    Route::get('/yadnya/{nama_yadnya}','YadnyaListController@selectedCardYadnya');
     Route::get('/listyadnya','YadnyaListController@listYadnyaMaster');
     Route::get('/listallyadnya','YadnyaListController@listAllYadnya');
     Route::get('/listyadnyaterbaru','YadnyaListController@listYadnyaTerbaru');
@@ -58,13 +69,14 @@ Route::group(['as' => 'user'], function () {
     #prosesi
     Route::get('/listallprosesi','ProsesiListController@listAllProsesi');
     Route::get('/detailprosesi/{id_post}','ProsesiListController@detailProsesi');
+    Route::get('/detailgamelanprosesi/{id_post}','ProsesiListController@detailGamelan');
+    Route::get('/detailkidungprosesi/{id_post}','ProsesiListController@detailKidung');
+    Route::get('/detailtariprosesi/{id_post}','ProsesiListController@detailTari');
+    Route::get('/detailtabuhprosesi/{id_post}','ProsesiListController@detailTabuh');
+    Route::get('/detailmantramprosesi/{id_post}','ProsesiListController@detailMantram');
 
-});
+    Route::get('/prosesicr/{id_parent_post}/{id_post}','ProsesiListController@detailProsesiCopyReference');
+    Route::get('/detailgamelanprosesicr/{id_parent_post}/{id_post}','ProsesiListController@detailGamelanProsesiCopyReference');
+    Route::get('/detailprosesigamelancr/{id_post}','ProsesiListController@detailGamelanProsesi');
 
-Route::group(['as' => 'admin'], function () {
-    #yadnya
-    Route::get('/admin/listyadnya','Admin\HomeController@listYadnyaMaster');
-
-    Route::get('/detailprosesicr/{id_parent_post}/{id_post}','ProsesiListController@detailGamelanProsesiCopyReference');
-    Route::get('/detailprosesi/{id_post}','ProsesiListController@detailGamelanProsesi');
 });

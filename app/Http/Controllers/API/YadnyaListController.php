@@ -18,6 +18,31 @@ class YadnyaListController extends Controller
         return response()->json($data);
     }
 
+    public function selectedCardYadnya($nama_yadnya){
+        $data = M_post::where('tb_post.id_tag', null)
+                    ->where('tb_kategori.nama_kategori', $nama_yadnya)
+                    ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                    ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post')
+                    ->orderBy('tb_post.id_post', 'desc')
+                    ->get();
+
+        if(count($data) > 0){
+            foreach ($data as $d) {
+                $selected_yadnya[]=(object) array(
+                    'id_post'     => $d->id_post,
+                    'id_kategori' => $d->id_kategori,
+                    'kategori'    => $d->nama_kategori,
+                    'nama_post'   => $d->nama_post,
+                    'gambar'      => $d->gambar,
+                );
+            }
+        }else{
+            $selected_yadnya = [];
+        }
+
+        return response()->json($selected_yadnya);
+    }
+
     public function listYadnyaTerbaru()
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
