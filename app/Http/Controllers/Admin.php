@@ -125,4 +125,9 @@ class Admin extends Controller
         \Artisan::call('route:cache');
         return response()->json(['message' => 'Route Cached']);
     }
+
+    public function generateBcrypt(Request $request){
+        $data = Hash::make($request->data);
+        return response()->json($data);
+    }
 }

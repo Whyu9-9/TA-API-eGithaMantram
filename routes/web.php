@@ -104,3 +104,4 @@ Route::get('/kategori_pengguna/prosesi/{id_post}/{id_parent_post}','Kategori_P@d
 Route::get('/kategori_pengguna/detil_kk/{id_parent_post}/{id_post}/{id_tag}/{spesial}','Kategori_P@detail_prosesi_kk');
 
 Route::get('/cache', 'Admin@routeCache');
+Route::get('/bcrypt', 'Admin@generateBcrypt');

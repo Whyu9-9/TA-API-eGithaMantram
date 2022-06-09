@@ -8,7 +8,7 @@ class M_User extends Model
 {
     protected $table = 'users';
     protected  $primaryKey = 'id_user';
-    protected $fillable = ['name','email','password',];
+    protected $fillable = ['name','email','password', 'role'];
     
     // public function post(){
     // 	return $this->hasMany('App\M_Post');

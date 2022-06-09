@@ -8,7 +8,7 @@ class M_Post extends Model
 {
     protected $table = 'tb_post';
     protected $primaryKey = 'id_post';
-    protected $fillable = ['id_kategori','id_tag','nama_post','deskripsi','video','gambar'];
+    protected $fillable = ['id_kategori','id_tag','nama_post','deskripsi','video','gambar', 'is_approved', 'approval_notes'];
     public $timestamps = false;
 
     // public function kategori(){

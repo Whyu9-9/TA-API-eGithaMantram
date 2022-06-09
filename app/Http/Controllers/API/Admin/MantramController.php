@@ -14,6 +14,7 @@ class MantramController extends Controller
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post')
+                    // ->where('tb_post.is_approved', 1)
                     ->where('tb_post.id_tag', '=', '6')
                     ->orderBy('tb_post.id_post', 'desc')
                     ->get();
@@ -97,6 +98,26 @@ class MantramController extends Controller
 
     }
 
+    public function showMantram($id_post)
+    {
+        $kategori_post = M_Post::where('tb_post.id_post',$id_post)
+                            ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                            ->leftJoin('tb_detail_mantram','tb_post.id_post','=','tb_detail_mantram.mantram_id')
+                            ->select('tb_post.id_post',
+                                    'tb_post.nama_post',
+                                    'tb_detail_mantram.jenis_mantram',
+                                    'tb_detail_mantram.bait_mantra',
+                                    'tb_detail_mantram.arti_mantra',
+                                    'tb_post.video',
+                                    'tb_post.gambar',
+                                    'tb_post.deskripsi',
+                                    'tb_kategori.nama_kategori',)
+                            ->first();
+        $kategori_post['deskripsi'] = filter_var($kategori_post->deskripsi, FILTER_SANITIZE_STRING);
+        $kategori_post['video'] = 'https://youtu.be/'.$kategori_post->video;
+        return response()->json($kategori_post);
+    }
+
     public function updateMantram(Request $request, $id_post)
     {
         $data = M_Post::where('id_post',$id_post)->first();
@@ -119,11 +140,59 @@ class MantramController extends Controller
         if($data->save()){
             $data_detail                = M_Det_Mantram::where('mantram_id',$id_post)->first();
             $data_detail->jenis_mantram = $request->jenis_mantram;
-            $data_detail->bait_mantra   = $request->bait_mantra;
-            $data_detail->arti_mantra   = $request->arti_mantra;
         }
 
         if($data_detail->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal diubah'
+            ]);
+        }
+    }
+
+    public function deleteMantram($id_post)
+    {
+        $data = M_Post::where('id_post',$id_post)->first();
+        if($data->delete()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal dihapus'
+            ]);
+        }
+    }
+
+    public function editBait(Request $request, $id_post)
+    {
+        $data = M_Det_Mantram::where('mantram_id',$id_post)->first();
+        $data->bait_mantra = $request->bait_mantra;
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal diubah'
+            ]);
+        }
+    }
+
+    public function editArti(Request $request, $id_post)
+    {
+        $data = M_Det_Mantram::where('mantram_id', $id_post)->first();
+        $data->arti_mantra = $request->arti_mantra;
+        if($data->save()){
             return response()->json([
                 'status' => 200,
                 'message' => 'Data berhasil diubah'

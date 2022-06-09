@@ -13,6 +13,7 @@ class TariListController extends Controller
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->select('tb_post.id_post','tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post')
+                    // ->where('tb_post.is_approved', 1)
                     ->where('tb_post.id_tag', '=', '2')->orderBy('tb_post.id_post', 'desc')
                     ->get();
 

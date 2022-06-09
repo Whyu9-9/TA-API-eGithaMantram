@@ -16,15 +16,74 @@ use Illuminate\Http\Request;
 Route::group(['as' => 'admin'], function () {
     Route::post('/login', 'AuthAdminController@login');
 
+    #admin
+    Route::get('/admin/listadmin', 'Admin\AdminController@index');
+    Route::get('/admin/detailadmin/{id_user}', 'Admin\AdminController@getDetailAdmin');
+    Route::post('/admin/createadmin', 'Admin\AdminController@createAdmin');
+    Route::post('/admin/editadmin/{id_user}', 'Admin\AdminController@editAdmin');
+    Route::post('/admin/deleteadmin/{id_user}', 'Admin\AdminController@deleteAdmin');
+
+    #tabuh
+    Route::get('/admin/listalltabuhadmin', 'Admin\TabuhController@listAllTabuhAdmin');
+    Route::get('/admin/detailtabuhadmin/{id_post}', 'Admin\TabuhController@detailTabuhAdmin');
+    Route::post('/admin/createtabuh', 'Admin\TabuhController@createTabuh');
+    Route::get('/admin/showtabuh/{id_post}','Admin\TabuhController@showTabuh');
+    Route::post('/admin/edittabuh/{id_post}', 'Admin\TabuhController@updateTabuh');
+    Route::post('/admin/deletetabuh/{id_post}', 'Admin\TabuhController@deleteTabuh');
+    
+    #kidung
+    Route::get('/admin/listallkidungadmin', 'Admin\KidungController@listAllKidungAdmin');
+    Route::get('/admin/detailkidungadmin/{id_post}', 'Admin\KidungController@detailKidungAdmin');
+    Route::get('/admin/listlirikkidungadmin/{id_post}', 'Admin\KidungController@detailBaitKidungAdmin');
+    Route::post('/admin/createkidung', 'Admin\KidungController@createKidung');
+    Route::get('/admin/showkidung/{id_post}','Admin\KidungController@showKidung');
+    Route::post('/admin/editkidung/{id_post}', 'Admin\KidungController@updateKidung');
+    Route::post('/admin/deletekidung/{id_post}', 'Admin\KidungController@deleteKidung');
+
+    Route::get('/admin/lirikkidungadmin/{id_post}', 'Admin\KidungController@listBaitKidungAdmin');
+    Route::post('/admin/addlirikkidung/{id_post}', 'Admin\KidungController@addLirikKidung');
+    Route::get('/admin/showlirikkidung/{id_det_post}','Admin\KidungController@showLirikKidung');
+    Route::post('/admin/editlirikkidung/{id_det_post}', 'Admin\KidungController@updateLirikKidung');
+    Route::post('/admin/deletelirikkidung/{id_det_post}', 'Admin\KidungController@deleteLirikKidung');
+
+    #gamelan
+    Route::get('/admin/listallgamelanadmin', 'Admin\GamelanController@listAllGamelanAdmin');
+    Route::get('/admin/detailgamelanadmin/{id_post}', 'Admin\GamelanController@detailGamelanAdmin');
+    Route::post('/admin/creategamelan', 'Admin\GamelanController@createGamelan');
+    Route::get('/admin/showgamelan/{id_post}','Admin\GamelanController@showGamelan');
+    Route::post('/admin/editgamelan/{id_post}', 'Admin\GamelanController@updateGamelan');
+    Route::post('/admin/deletegamelan/{id_post}', 'Admin\GamelanController@deleteGamelan');
+    Route::get('/admin/listtabuhongamelan/{id_post}', 'Admin\GamelanController@listAllTabuhGamelanAdmin');
+    Route::get('/admin/listtabuhnotongamelan/{id_post}', 'Admin\GamelanController@listAllTabuhNotYetOnGamelan');
+    Route::post('/admin/addtabuhongamelan/{id_post}', 'Admin\GamelanController@addTabuhToGamelan');
+    Route::post('/admin/deletetabuhongamelan/{id_post}', 'Admin\GamelanController@deleteTabuhFromGamelan');
+
+    #tari
+    Route::get('/admin/listalltariadmin', 'Admin\TariController@listAllTariAdmin');
+    Route::get('/admin/detailtariadmin/{id_post}', 'Admin\TariController@detailTariAdmin');
+    Route::post('/admin/createtari', 'Admin\TariController@createTari');
+    Route::get('/admin/showtari/{id_post}','Admin\TariController@showTari');
+    Route::post('/admin/edittari/{id_post}', 'Admin\TariController@updateTari');
+    Route::post('/admin/deletetari/{id_post}', 'Admin\TariController@deleteTari');
+    Route::get('/admin/listtabuhontari/{id_post}', 'Admin\TariController@listAllTabuhTariAdmin');
+    Route::get('/admin/listtabuhnotontari/{id_post}', 'Admin\TariController@listAllTabuhNotYetOnTari');
+    Route::post('/admin/addtabuhontari/{id_post}', 'Admin\TariController@addTabuhToTari');
+    Route::post('/admin/deletetabuhontari/{id_post}', 'Admin\TariController@deleteTabuhFromTari');
+
     #yadnya
     Route::get('/admin/listyadnya','Admin\HomeController@listYadnyaMaster');
     Route::get('/admin/yadnya/{nama_yadnya}','Admin\HomeController@selectedHomeYadnya');
-
 
     #mantram
     Route::get('/admin/listallmantram','Admin\MantramController@listAllMantramAdmin');
     Route::get('/admin/detailmantram/{id_post}','Admin\MantramController@detailMantramAdmin');
     Route::post('/admin/createmantram','Admin\MantramController@createMantram');
+    Route::get('/admin/showmantram/{id_post}','Admin\MantramController@showMantram');
+    Route::post('/admin/updatemantram/{id_post}','Admin\MantramController@updateMantram');
+    Route::post('/admin/deletemantram/{id_post}','Admin\MantramController@deleteMantram');
+    Route::post('/admin/deletemantram/{id_post}','Admin\MantramController@deleteMantram');
+    Route::post('/admin/editbaitmantram/{id_post}','Admin\MantramController@editBait');
+    Route::post('/admin/editartimantram/{id_post}','Admin\MantramController@editArti');
 });
 
 Route::group(['as' => 'user'], function () {
