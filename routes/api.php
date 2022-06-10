@@ -53,6 +53,7 @@ Route::group(['as' => 'admin'], function () {
     Route::get('/admin/showgamelan/{id_post}','Admin\GamelanController@showGamelan');
     Route::post('/admin/editgamelan/{id_post}', 'Admin\GamelanController@updateGamelan');
     Route::post('/admin/deletegamelan/{id_post}', 'Admin\GamelanController@deleteGamelan');
+    
     Route::get('/admin/listtabuhongamelan/{id_post}', 'Admin\GamelanController@listAllTabuhGamelanAdmin');
     Route::get('/admin/listtabuhnotongamelan/{id_post}', 'Admin\GamelanController@listAllTabuhNotYetOnGamelan');
     Route::post('/admin/addtabuhongamelan/{id_post}', 'Admin\GamelanController@addTabuhToGamelan');
@@ -65,12 +66,51 @@ Route::group(['as' => 'admin'], function () {
     Route::get('/admin/showtari/{id_post}','Admin\TariController@showTari');
     Route::post('/admin/edittari/{id_post}', 'Admin\TariController@updateTari');
     Route::post('/admin/deletetari/{id_post}', 'Admin\TariController@deleteTari');
+    
     Route::get('/admin/listtabuhontari/{id_post}', 'Admin\TariController@listAllTabuhTariAdmin');
     Route::get('/admin/listtabuhnotontari/{id_post}', 'Admin\TariController@listAllTabuhNotYetOnTari');
     Route::post('/admin/addtabuhontari/{id_post}', 'Admin\TariController@addTabuhToTari');
     Route::post('/admin/deletetabuhontari/{id_post}', 'Admin\TariController@deleteTabuhFromTari');
 
-    #yadnya
+    #prosesi
+    Route::get('/admin/listallprosesiadmin', 'Admin\ProsesiController@listAllProsesiAdmin');
+    Route::get('/admin/detailprosesiadmin/{id_post}', 'Admin\ProsesiController@detailProsesiAdmin');
+    Route::post('/admin/createprosesi', 'Admin\ProsesiController@createProsesi');
+    Route::get('/admin/showprosesi/{id_post}','Admin\ProsesiController@showProsesi');
+    Route::post('/admin/editprosesi/{id_post}', 'Admin\ProsesiController@updateProsesi');
+    Route::post('/admin/deleteprosesi/{id_post}', 'Admin\ProsesiController@deleteProsesi');
+
+    Route::get('/admin/listgamelanonprosesi/{id_post}', 'Admin\ProsesiController@listAllGamelanProsesiAdmin');
+
+    Route::get('/admin/listgamelannotonprosesi/{id_post}', 'Admin\ProsesiController@listAllGamelanNotYetOnProsesi');
+    Route::post('/admin/addgamelanonprosesi/{id_post}', 'Admin\ProsesiController@addGamelanToProsesi');
+    Route::post('/admin/deletegamelanonprosesi/{id_post}', 'Admin\ProsesiController@deleteGamelanFromProsesi');
+
+    Route::get('/admin/listtarionprosesi/{id_post}', 'Admin\ProsesiController@listAllTariProsesiAdmin');
+
+    Route::get('/admin/listtarinotonprosesi/{id_post}', 'Admin\ProsesiController@listAllTariNotYetOnProsesi');
+    Route::post('/admin/addtarionprosesi/{id_post}', 'Admin\ProsesiController@addTariToProsesi');
+    Route::post('/admin/deletetarionprosesi/{id_post}', 'Admin\ProsesiController@deleteTariFromProsesi');
+
+    Route::get('/admin/listkidungonprosesi/{id_post}', 'Admin\ProsesiController@listAllKidungProsesiAdmin');
+
+    Route::get('/admin/listkidungnotonprosesi/{id_post}', 'Admin\ProsesiController@listAllKidungNotYetOnProsesi');
+    Route::post('/admin/addkidungonprosesi/{id_post}', 'Admin\ProsesiController@addKidungToProsesi');
+    Route::post('/admin/deletekidungonprosesi/{id_post}', 'Admin\ProsesiController@deleteKidungFromProsesi');
+
+    Route::get('/admin/listtabuhonprosesi/{id_post}', 'Admin\ProsesiController@listAllTabuhProsesiAdmin');
+
+    Route::get('/admin/listtabuhnotonprosesi/{id_post}', 'Admin\ProsesiController@listAllTabuhNotYetOnProsesi');
+    Route::post('/admin/addtabuhonprosesi/{id_post}', 'Admin\ProsesiController@addTabuhToProsesi');
+    Route::post('/admin/deletetabuhonprosesi/{id_post}', 'Admin\ProsesiController@deleteTabuhFromProsesi');
+
+    Route::get('/admin/listmantramonprosesi/{id_post}', 'Admin\ProsesiController@listAllMantramProsesiAdmin');
+
+    Route::get('/admin/listmantramnotonprosesi/{id_post}', 'Admin\ProsesiController@listAllMantramNotYetOnProsesi');
+    Route::post('/admin/addmantramonprosesi/{id_post}', 'Admin\ProsesiController@addMantramToProsesi');
+    Route::post('/admin/deletemantramonprosesi/{id_post}', 'Admin\ProsesiController@deleteMantramFromProsesi');
+
+    #yadnyaHome
     Route::get('/admin/listyadnya','Admin\HomeController@listYadnyaMaster');
     Route::get('/admin/yadnya/{nama_yadnya}','Admin\HomeController@selectedHomeYadnya');
 
