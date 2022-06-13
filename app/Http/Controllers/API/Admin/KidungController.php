@@ -30,7 +30,12 @@ class KidungController extends Controller
             );
         }
 
-        return response()->json($new_kidung);
+        if(isset($new_kidung)){
+            return response()->json($new_kidung);
+        }else {
+            $new_kidung = [];
+            return response()->json($new_kidung);
+        }
     }
 
     public function detailKidungAdmin($id_post)
@@ -78,6 +83,7 @@ class KidungController extends Controller
         $data->id_kategori = $kat->id_kategori;
         $data->video       = preg_replace("#.*youtu\.be/#", "", $request->video);
         $data->deskripsi   = "<p>".$request->deskripsi."</p>";
+        $data->is_approved = 1;
         if($request->has('gambar')){
             $image = time().'.jpg';
             file_put_contents('gambarku/'.$image,base64_decode($request->gambar));
@@ -120,7 +126,7 @@ class KidungController extends Controller
     {
         $kat = M_Kategori::where('nama_kategori',$request->kategori)->first();
 
-        $data = M_Post::where('id_post',$id_post)->first();
+        $data              = M_Post::where('id_post',$id_post)->first();
         $data->nama_post   = $request->nama_post;
         $data->id_tag      = 4;
         $data->id_kategori = $kat->id_kategori;

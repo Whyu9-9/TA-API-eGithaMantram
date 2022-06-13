@@ -28,7 +28,12 @@ class ProsesiController extends Controller
             );
         }
 
-        return response()->json($new_prosesi);
+        if(isset($new_prosesi)){
+            return response()->json($new_prosesi);
+        }else {
+            $new_prosesi = [];
+            return response()->json($new_prosesi);
+        }
     }
 
     public function detailProsesiAdmin($id_post)
@@ -53,6 +58,7 @@ class ProsesiController extends Controller
         $data->id_tag      = 3;
         $data->video       = preg_replace("#.*youtu\.be/#", "", $request->video);
         $data->deskripsi   = "<p>".$request->deskripsi."</p>";
+        $data->is_approved = 1;
         if($request->has('gambar')){
             $image = time().'.jpg';
             file_put_contents('gambarku/'.$image,base64_decode($request->gambar));
@@ -174,12 +180,15 @@ class ProsesiController extends Controller
                     'nama_post' => $c->nama_post,
                     'gambar'    => $c->gambar,
                 );
-            }else{
-                $new_check = [];
             }
         }
 
-        return response()->json($new_check);
+        if(isset($new_check)){
+            return response()->json($new_check);
+        }else {
+            $new_check = [];
+            return response()->json($new_check);
+        }
     }
 
     public function addGamelanToProsesi(Request $request, $id_post){
@@ -260,12 +269,15 @@ class ProsesiController extends Controller
                     'nama_post' => $c->nama_post,
                     'gambar'    => $c->gambar,
                 );
-            }else{
-                $new_check = [];
             }
         }
 
-        return response()->json($new_check);
+        if(isset($new_check)){
+            return response()->json($new_check);
+        }else {
+            $new_check = [];
+            return response()->json($new_check);
+        }
     }
 
     public function addTariToProsesi(Request $request, $id_post){
@@ -357,12 +369,15 @@ class ProsesiController extends Controller
                     'gambar'    => $c->gambar,
                     'kategori'  => $c->nama_kategori,
                 );
-            }else{
-                $new_check = [];
             }
         }
 
-        return response()->json($new_check);
+        if(isset($new_check)){
+            return response()->json($new_check);
+        }else {
+            $new_check = [];
+            return response()->json($new_check);
+        }
     }
 
     public function addKidungToProsesi(Request $request, $id_post){
@@ -443,12 +458,15 @@ class ProsesiController extends Controller
                     'nama_post' => $c->nama_post,
                     'gambar'    => $c->gambar,
                 );
-            }else{
-                $new_check = [];
             }
         }
 
-        return response()->json($new_check);
+        if(isset($new_check)){
+            return response()->json($new_check);
+        }else {
+            $new_check = [];
+            return response()->json($new_check);
+        }
     }
 
     public function addTabuhToProsesi(Request $request, $id_post){
@@ -540,12 +558,15 @@ class ProsesiController extends Controller
                     'gambar'    => $c->gambar,
                     'kategori'  => $c->nama_kategori,
                 );
-            }else{
-                $new_check = [];
             }
         }
 
-        return response()->json($new_check);
+        if(isset($new_check)){
+            return response()->json($new_check);
+        }else {
+            $new_check = [];
+            return response()->json($new_check);
+        }
     }
 
     public function addMantramToProsesi(Request $request, $id_post){

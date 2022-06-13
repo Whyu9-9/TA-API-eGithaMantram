@@ -110,6 +110,56 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/admin/addmantramonprosesi/{id_post}', 'Admin\ProsesiController@addMantramToProsesi');
     Route::post('/admin/deletemantramonprosesi/{id_post}', 'Admin\ProsesiController@deleteMantramFromProsesi');
 
+    #yadnya
+    Route::get('/admin/listallyadnyaadmin/{id_yadnya}', 'Admin\YadnyaController@listAllYadnyaAdmin');
+    Route::get('/admin/detailyadnyaadmin/{id_post}', 'Admin\YadnyaController@detailYadnyaAdmin');
+    Route::post('/admin/createyadnya', 'Admin\YadnyaController@createYadnya');
+    Route::get('/admin/showyadnya/{id_post}','Admin\YadnyaController@showYadnya');
+    Route::post('/admin/edityadnya/{id_post}', 'Admin\YadnyaController@updateYadnya');
+    Route::post('/admin/deleteyadnya/{id_post}', 'Admin\YadnyaController@deleteYadnya');
+
+    Route::get('/admin/listprosesiawalonyadnya/{id_post}', 'Admin\YadnyaController@listAllProsesiAwalYadnyaAdmin');
+
+    Route::get('/admin/listprosesiawalnotonyadnya/{id_post}', 'Admin\YadnyaController@listAllProsesiAwalNotYetOnYadnya');
+    Route::post('/admin/addprosesiawalonyadnya/{id_post}', 'Admin\YadnyaController@addProsesiAwalToYadnya');
+    Route::post('/admin/upprosesiawalonyadnya/{id_post}', 'Admin\YadnyaController@upProsesiAwal');
+    Route::post('/admin/downprosesiawalonyadnya/{id_post}', 'Admin\YadnyaController@downProsesiAwal');
+    Route::post('/admin/deleteprosesiawalonyadnya/{id_post}', 'Admin\YadnyaController@deleteProsesiAwalFromYadnya');
+
+    Route::get('/admin/listprosesipuncakonyadnya/{id_post}', 'Admin\YadnyaController@listAllProsesiPuncakYadnyaAdmin');
+
+    Route::get('/admin/listprosesipuncaknotonyadnya/{id_post}', 'Admin\YadnyaController@listAllProsesiPuncakNotYetOnYadnya');
+    Route::post('/admin/addprosesipuncakonyadnya/{id_post}', 'Admin\YadnyaController@addProsesiPuncakToYadnya');
+    Route::post('/admin/upprosesipuncakonyadnya/{id_post}', 'Admin\YadnyaController@upProsesiPuncak');
+    Route::post('/admin/downprosesipuncakonyadnya/{id_post}', 'Admin\YadnyaController@downProsesiPuncak');
+    Route::post('/admin/deleteprosesipuncakonyadnya/{id_post}', 'Admin\YadnyaController@deleteProsesiPuncakFromYadnya');
+
+    Route::get('/admin/listprosesiakhironyadnya/{id_post}', 'Admin\YadnyaController@listAllProsesiAkhirYadnyaAdmin');
+
+    Route::get('/admin/listprosesiakhirnotonyadnya/{id_post}', 'Admin\YadnyaController@listAllProsesiAkhirNotYetOnYadnya');
+    Route::post('/admin/addprosesiakhironyadnya/{id_post}', 'Admin\YadnyaController@addProsesiAkhirToYadnya');
+    Route::post('/admin/upprosesiakhironyadnya/{id_post}', 'Admin\YadnyaController@upProsesiAkhir');
+    Route::post('/admin/downprosesiakhironyadnya/{id_post}', 'Admin\YadnyaController@downProsesiAkhir');
+    Route::post('/admin/deleteprosesiakhironyadnya/{id_post}', 'Admin\YadnyaController@deleteProsesiAkhirFromYadnya');
+
+    Route::get('/admin/listgamelanonyadnya/{id_post}', 'Admin\YadnyaController@listAllGamelanYadnyaAdmin');
+
+    Route::get('/admin/listgamelannotonyadnya/{id_post}', 'Admin\YadnyaController@listAllGamelanNotYetOnYadnya');
+    Route::post('/admin/addgamelanonyadnya/{id_post}', 'Admin\YadnyaController@addGamelanToYadnya');
+    Route::post('/admin/deletegamelanonyadnya/{id_post}', 'Admin\YadnyaController@deleteGamelanFromYadnya');
+
+    Route::get('/admin/listtarionyadnya/{id_post}', 'Admin\YadnyaController@listAllTariYadnyaAdmin');
+
+    Route::get('/admin/listtarinotonyadnya/{id_post}', 'Admin\YadnyaController@listAllTariNotYetOnYadnya');
+    Route::post('/admin/addtarionyadnya/{id_post}', 'Admin\YadnyaController@addTariToYadnya');
+    Route::post('/admin/deletetarionyadnya/{id_post}', 'Admin\YadnyaController@deleteTariFromYadnya');
+
+    Route::get('/admin/listkidungonyadnya/{id_post}', 'Admin\YadnyaController@listAllKidungYadnyaAdmin');
+
+    Route::get('/admin/listkidungnotonyadnya/{id_post}', 'Admin\YadnyaController@listAllKidungNotYetOnYadnya');
+    Route::post('/admin/addkidungonyadnya/{id_post}', 'Admin\YadnyaController@addKidungToYadnya');
+    Route::post('/admin/deletekidungonyadnya/{id_post}', 'Admin\YadnyaController@deleteKidungFromYadnya');
+
     #yadnyaHome
     Route::get('/admin/listyadnya','Admin\HomeController@listYadnyaMaster');
     Route::get('/admin/yadnya/{nama_yadnya}','Admin\HomeController@selectedHomeYadnya');

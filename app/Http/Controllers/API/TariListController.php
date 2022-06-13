@@ -17,12 +17,16 @@ class TariListController extends Controller
                     ->where('tb_post.id_tag', '=', '2')->orderBy('tb_post.id_post', 'desc')
                     ->get();
 
-        foreach ($datas as $data) {
-            $new_tari[]=(object) array(
-                'id_post'     => $data->id_post,
-                'nama_post'   => $data->nama_post,
-                'gambar'      => $data->gambar,
-            );
+        if(count($datas) > 0){
+            foreach ($datas as $data) {
+                $new_tari[]=(object) array(
+                    'id_post'     => $data->id_post,
+                    'nama_post'   => $data->nama_post,
+                    'gambar'      => $data->gambar,
+                );
+            }
+        }else{
+            $new_tari = [];
         }
 
         return response()->json($new_tari);

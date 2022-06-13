@@ -27,7 +27,12 @@ class TariController extends Controller
             );
         }
 
-        return response()->json($new_tari);
+        if(isset($new_tari)){
+            return response()->json($new_tari);
+        }else {
+            $new_tari = [];
+            return response()->json($new_tari);
+        }
     }
 
     public function detailTariAdmin($id_post)
@@ -52,6 +57,7 @@ class TariController extends Controller
         $data->id_tag      = 2;
         $data->video       = preg_replace("#.*youtu\.be/#", "", $request->video);
         $data->deskripsi   = "<p>".$request->deskripsi."</p>";
+        $data->is_approved = 1;
         if($request->has('gambar')){
             $image = time().'.jpg';
             file_put_contents('gambarku/'.$image,base64_decode($request->gambar));
@@ -176,7 +182,12 @@ class TariController extends Controller
             }
         }
 
-        return response()->json($new_check);
+        if(isset($new_check)){
+            return response()->json($new_check);
+        }else {
+            $new_check = [];
+            return response()->json($new_check);
+        }
     }
 
     public function addTabuhToTari(Request $request, $id_post){

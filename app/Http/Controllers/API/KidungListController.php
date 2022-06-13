@@ -40,19 +40,19 @@ class KidungListController extends Controller
                     ->where('tb_post.id_tag', '=', '4')->orderBy('tb_post.id_post', 'desc')
                     ->get();
 
-        foreach ($datas as $data) {
-            $new_kidung[]=(object) array(
-                'id_post'     => $data->id_post,
-                'id_kategori' => $data->id_kategori,
-                'kategori'    => $data->nama_kategori,
-                'nama_post'   => $data->nama_post,
-                'gambar'      => $data->gambar,
-            );
+        if(count($datas) > 0){
+            foreach ($datas as $data) {
+                $new_kidung[]=(object) array(
+                    'id_post'     => $data->id_post,
+                    'id_kategori' => $data->id_kategori,
+                    'kategori'    => $data->nama_kategori,
+                    'nama_post'   => $data->nama_post,
+                    'gambar'      => $data->gambar,
+                );
+            }
+        }else{
+            $new_kidung = [];
         }
-
-        // $arr = [
-        //     "data" => $new_kidung
-        // ];
 
         return response()->json($new_kidung);
     }

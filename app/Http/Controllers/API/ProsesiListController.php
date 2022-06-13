@@ -20,15 +20,19 @@ class ProsesiListController extends Controller
                     ->where('tb_post.id_tag', '=', '3')->orderBy('tb_post.id_post', 'desc')
                     ->get();
 
-        foreach ($datas as $data) {
-            $new_tabuh[]=(object) array(
-                'id_post'     => $data->id_post,
-                'nama_post'   => $data->nama_post,
-                'gambar'      => $data->gambar,
-            );
+        if(count($datas) > 0){
+            foreach ($datas as $data) {
+                $new_prosesi[]=(object) array(
+                    'id_post'     => $data->id_post,
+                    'nama_post'   => $data->nama_post,
+                    'gambar'      => $data->gambar,
+                );
+            }
+        }else{
+            $new_prosesi = [];
         }
 
-        return response()->json($new_tabuh);
+        return response()->json($new_prosesi);
     }
  
     public function detailProsesiCopyReference($id_parent_post, $id_post)

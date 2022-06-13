@@ -24,7 +24,12 @@ class TabuhController extends Controller
             );
         }
 
-        return response()->json($new_tabuh);
+        if(isset($new_tabuh)){
+            return response()->json($new_tabuh);
+        }else {
+            $new_tabuh = [];
+            return response()->json($new_tabuh);
+        }
     }
 
     public function detailTabuhAdmin($id_post)

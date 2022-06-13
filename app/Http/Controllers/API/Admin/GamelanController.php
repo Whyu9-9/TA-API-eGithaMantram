@@ -27,7 +27,12 @@ class GamelanController extends Controller
             );
         }
 
-        return response()->json($new_gamelan);
+        if(isset($new_gamelan)){
+            return response()->json($new_gamelan);
+        }else {
+            $new_gamelan = [];
+            return response()->json($new_gamelan);
+        }
     }
 
     public function detailGamelanAdmin($id_post)
@@ -52,6 +57,7 @@ class GamelanController extends Controller
         $data->id_tag      = 1;
         $data->video       = preg_replace("#.*youtu\.be/#", "", $request->video);
         $data->deskripsi   = "<p>".$request->deskripsi."</p>";
+        $data->is_approved = 1;
         if($request->has('gambar')){
             $image = time().'.jpg';
             file_put_contents('gambarku/'.$image,base64_decode($request->gambar));
@@ -176,7 +182,12 @@ class GamelanController extends Controller
             }
         }
 
-        return response()->json($new_check);
+        if(isset($new_check)){
+            return response()->json($new_check);
+        }else {
+            $new_check = [];
+            return response()->json($new_check);
+        }
     }
 
     public function addTabuhToGamelan(Request $request, $id_post){

@@ -122,12 +122,16 @@ class YadnyaListController extends Controller
                                         'tb_detil_post.posisi')
                                 ->orderBy('tb_detil_post.posisi', 'ASC')
                                 ->get();
-        foreach ($det_pros as $d_pros) {
-            $new_pros[] = (object) array(
-                'id_post'   => $d_pros->id_parent_post,
-                'nama_post' => $d_pros->nama_post,
-                'posisi'    => $d_pros->posisi,
-            );
+        if(count($det_pros) > 0){
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'posisi'    => $d_pros->posisi,
+                );
+            }
+        }else{
+            $new_pros = [];
         }
 
         $data = [
@@ -152,12 +156,16 @@ class YadnyaListController extends Controller
                                         'tb_detil_post.posisi')
                                 ->orderBy('tb_detil_post.posisi', 'ASC')
                                 ->get();
-        foreach ($det_pros as $d_pros) {
-            $new_pros[] = (object) array(
-                'id_post'   => $d_pros->id_parent_post,
-                'nama_post' => $d_pros->nama_post,
-                'posisi'    => $d_pros->posisi,
-            );
+        if(count($det_pros) > 0){
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'posisi'    => $d_pros->posisi,
+                );
+            }
+        }else{
+            $new_pros = [];
         }
 
         $data = [
@@ -182,12 +190,16 @@ class YadnyaListController extends Controller
                                         'tb_detil_post.posisi')
                                 ->orderBy('tb_detil_post.posisi', 'ASC')
                                 ->get();
-        foreach ($det_pros as $d_pros) {
-            $new_pros[] = (object) array(
-                'id_post'   => $d_pros->id_parent_post,
-                'nama_post' => $d_pros->nama_post,
-                'posisi'    => $d_pros->posisi,
-            );
+        if(count($det_pros) > 0){
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                    'posisi'    => $d_pros->posisi,
+                );
+            }
+        }else{
+            $new_pros = [];
         }
 
         $data = [

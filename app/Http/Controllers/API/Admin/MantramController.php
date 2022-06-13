@@ -29,7 +29,12 @@ class MantramController extends Controller
             );
         }
 
-        return response()->json($new_mantram);
+        if(isset($new_mantram)){
+            return response()->json($new_mantram);
+        }else {
+            $new_mantram = [];
+            return response()->json($new_mantram);
+        }
     }
 
     public function detailMantramAdmin($id_post)
