@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 Route::group(['as' => 'admin'], function () {
     Route::post('/login', 'AuthAdminController@login');
+    Route::post('/logout', 'AuthAdminController@logout');
 
     #admin
     Route::get('/admin/listadmin', 'Admin\AdminController@index');
@@ -110,6 +111,12 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/admin/addmantramonprosesi/{id_post}', 'Admin\ProsesiController@addMantramToProsesi');
     Route::post('/admin/deletemantramonprosesi/{id_post}', 'Admin\ProsesiController@deleteMantramFromProsesi');
 
+    Route::get('/admin/listprosesikhusus/{id_prosesi}/{id_yadnya}', 'Admin\ProsesiController@listAllProsesiKhususAdmin');
+
+    Route::get('/admin/listprosesikhususnotyet/{id_prosesi}/{id_yadnya}', 'Admin\ProsesiController@listAllProsesiKhususNotYetAdmin');
+    Route::post('/admin/addprosesikhusus/{id_prosesi}/{id_yadnya}', 'Admin\ProsesiController@addProsesiKhusus');
+    Route::post('/admin/deleteprosesikhusus/{id}', 'Admin\ProsesiController@deleteProsesiKhusus');
+
     #yadnya
     Route::get('/admin/listallyadnyaadmin/{id_yadnya}', 'Admin\YadnyaController@listAllYadnyaAdmin');
     Route::get('/admin/detailyadnyaadmin/{id_post}', 'Admin\YadnyaController@detailYadnyaAdmin');
@@ -174,6 +181,10 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/admin/deletemantram/{id_post}','Admin\MantramController@deleteMantram');
     Route::post('/admin/editbaitmantram/{id_post}','Admin\MantramController@editBait');
     Route::post('/admin/editartimantram/{id_post}','Admin\MantramController@editArti');
+
+    Route::get('/admin/listnotapprovedmantram', 'Admin\MantramController@listNotApprovedMantram');
+    Route::get('/admin/detailneedapprovalmantram/{id_post}', 'Admin\MantramController@detailMantramNeedApprovalAdmin');
+    Route::post('/admin/approvemantram/{id_post}', 'Admin\MantramController@approveMantram');
 });
 
 Route::group(['as' => 'user'], function () {
@@ -224,8 +235,6 @@ Route::group(['as' => 'user'], function () {
     Route::get('/detailtabuhprosesi/{id_post}','ProsesiListController@detailTabuh');
     Route::get('/detailmantramprosesi/{id_post}','ProsesiListController@detailMantram');
 
-    Route::get('/prosesicr/{id_parent_post}/{id_post}','ProsesiListController@detailProsesiCopyReference');
-    Route::get('/detailgamelanprosesicr/{id_parent_post}/{id_post}','ProsesiListController@detailGamelanProsesiCopyReference');
-    Route::get('/detailprosesigamelancr/{id_post}','ProsesiListController@detailGamelanProsesi');
+    Route::get('/prosesicr/{id_prosesi}/{id_yadnya}','ProsesiListController@detailProsesiCopyReference');
 
 });

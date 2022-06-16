@@ -538,6 +538,7 @@ class ProsesiController extends Controller
 
     public function listAllMantramNotYetOnProsesi($id_post){
         $check = M_Post::where('id_tag', '6')
+                    ->where('is_approved', '1')
                     ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->orderBy('id_post', 'desc')
                     ->select('tb_post.id_post',
@@ -592,6 +593,99 @@ class ProsesiController extends Controller
         $data = M_Det_Post::where('id_det_post', $id_post)
                             ->where('id_tag', 6)
                             ->first();
+        if($data->delete()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal dihapus'
+            ]);
+        }
+    }
+
+    public function listAllProsesiKhususAdmin($id_prosesi, $id_yadnya){
+        $det_pros = M_Det_Post::where('tb_detil_post.id_post', $id_prosesi)
+                        ->where('tb_detil_post.id_tag', '3')
+                        ->where('tb_detil_post.spesial',$id_yadnya)
+                        ->leftJoin('tb_tag', 'tb_detil_post.id_tag', '=', 'tb_tag.id_tag')
+                        ->leftJoin('tb_post', 'tb_detil_post.id_parent_post', '=', 'tb_post.id_post')
+                        ->select('tb_detil_post.id_det_post', 
+                                'tb_post.nama_post', 
+                                'tb_post.gambar', 
+                                'tb_post.id_post', 
+                                'tb_detil_post.id_parent_post', 
+                                'tb_detil_post.id_tag',)
+                        ->get();
+
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id'        => $d_pros->id_det_post,
+                    'id_post'   => $d_pros->id_parent_post,
+                    'nama_post' => $d_pros->nama_post,
+                );
+            }
+        } else {
+            $new_pros = [];
+        }
+
+        return response()->json($new_pros);
+    }
+
+    public function listAllProsesiKhususNotYetAdmin($id_prosesi, $id_yadnya){
+        $check = M_Post::where('id_tag', '3')->orderBy('id_post', 'desc')->get();
+
+        foreach($check as $c){
+            $val = M_Det_Post::where('id_parent_post', $c->id_post)
+                                ->where('id_tag', '3')
+                                ->where('spesial', $id_yadnya)
+                                ->where('id_post', $id_prosesi)
+                                ->first();
+            if($val == null){
+                $new_check[] = (object) array(
+                    'id_post'   => $c->id_post,
+                    'nama_post' => $c->nama_post,
+                    'gambar'    => $c->gambar,
+                );
+            }
+        }
+
+        if(isset($new_check)){
+            return response()->json($new_check);
+        }else {
+            $new_check = [];
+            return response()->json($new_check);
+        }
+    }
+
+    public function addProsesiKhusus(Request $request, $id_prosesi, $id_yadnya){
+        $data                 = new M_Det_Post;
+        $data->id_post        = $id_prosesi;
+        $data->spesial        = $id_yadnya;
+        $data->id_parent_post = $request->id_prosesis;
+        $data->id_tag         = 3;
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
+
+    public function deleteProsesiKhusus($id){
+        $data = M_Det_Post::where('id_det_post', $id)
+                            ->where('id_tag', 3)
+                            ->first();
+
         if($data->delete()){
             return response()->json([
                 'status' => 200,

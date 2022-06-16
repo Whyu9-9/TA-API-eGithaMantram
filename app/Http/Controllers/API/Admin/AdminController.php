@@ -65,6 +65,12 @@ class AdminController extends Controller
 
     public function deleteAdmin($id_user){
         $data = M_User::where('id_user',$id_user)->first();
+        if($data->mobile_is_logged == 1){
+            return response()->json([
+                'status'  => 401,
+                'message' => 'Data gagal dihapus, data ini masih terhubung di mobile!'
+            ]);
+        }
         if($data->delete()){
             return response()->json([
                 'status' => 200,

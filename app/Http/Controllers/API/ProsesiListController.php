@@ -34,36 +34,40 @@ class ProsesiListController extends Controller
 
         return response()->json($new_prosesi);
     }
- 
-    public function detailProsesiCopyReference($id_parent_post, $id_post)
+
+    public function detailProsesiCopyReference($id_prosesi, $id_yadnya)
     {
-        $data_det_pros = M_Det_Post::where('tb_detil_post.id_post', $id_parent_post)
+        $data_det_pros = M_Det_Post::where('tb_detil_post.id_post', $id_prosesi)
                                     ->where('tb_detil_post.id_tag', '3')
-                                    ->where('tb_detil_post.spesial',$id_post)
+                                    ->where('tb_detil_post.spesial',$id_yadnya)
                                     ->leftJoin('tb_tag', 'tb_detil_post.id_tag', '=', 'tb_tag.id_tag')
                                     ->leftJoin('tb_post', 'tb_detil_post.id_parent_post', '=', 'tb_post.id_post')
                                     ->select('tb_detil_post.id_det_post', 
                                             'tb_post.nama_post', 
                                             'tb_post.gambar', 
-                                            'tb_detil_post.id_post', 
+                                            'tb_post.id_post', 
                                             'tb_detil_post.id_parent_post', 
-                                            'tb_detil_post.id_tag')
+                                            'tb_detil_post.id_tag',)
                                     ->get();
+
         if(count($data_det_pros) > 0){
             foreach ($data_det_pros as $dp) {
                 $new_prosesi[] = (object) array(
                     'id_post'        => $dp->id_post,
-                    'id_child_post' => $dp->id_parent_post,
                     'nama_post'      => $dp->nama_post,
-                    'gambar'         => $dp->gambar,
-                    'id_tag'         => $dp->id_tag,
                 );
             }
+
+            $data = [
+                'data' => $new_prosesi,
+            ];
         }else{
-            $new_prosesi = [];
+            $data = [
+                'data' => [],
+            ];
         }
 
-        return response()->json($new_prosesi);
+        return response()->json($data);
     }
 
     public function detailProsesi($id_post)
