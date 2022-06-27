@@ -14,7 +14,7 @@ class MantramController extends Controller
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.is_approved')
-                    // ->where('tb_post.is_approved', 1)
+                    ->where('tb_post.is_approved', '!=', 0)
                     ->where('tb_post.id_tag', '=', '6')
                     ->orderBy('tb_post.id_post', 'desc')
                     ->get();
@@ -127,7 +127,8 @@ class MantramController extends Controller
                                     'tb_post.video',
                                     'tb_post.gambar',
                                     'tb_post.deskripsi',
-                                    'tb_kategori.nama_kategori',)
+                                    'tb_kategori.nama_kategori',
+                                    'tb_post.approval_notes',)
                             ->first();
         $kategori_post['deskripsi'] = filter_var($kategori_post->deskripsi, FILTER_SANITIZE_STRING);
         $kategori_post['video'] = 'https://youtu.be/'.$kategori_post->video;
@@ -136,15 +137,24 @@ class MantramController extends Controller
 
     public function updateMantram(Request $request, $id_post)
     {
-        $data = M_Post::where('id_post',$id_post)->first();
+        $check = $request->role_admin;
+
+        $data              = M_Post::where('id_post',$id_post)->first();
         $data->nama_post   = $request->nama_post;
         $data->id_tag      = 6;
+
         if($request->kategori != "Tidak Ada"){
             $kat = M_Kategori::where('nama_kategori',$request->kategori)->first();
             $data->id_kategori = $kat->id_kategori;
         }else{
             $data->id_kategori = null;
         }
+
+        if($check != 1 && $request->jenis_mantram == "Khusus") {
+            $data->is_approved    = 0;
+            $data->approval_notes = $request->approval_notes;
+        }
+
         $data->video       = preg_replace("#.*youtu\.be/#", "", $request->video);
         $data->deskripsi   = "<p>".$request->deskripsi."</p>";
         if($request->has('gambar')){
@@ -225,7 +235,7 @@ class MantramController extends Controller
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post')
-                    ->where('tb_post.is_approved', '!=' ,1)
+                    ->where('tb_post.is_approved', 0)
                     ->where('tb_post.id_tag', '=', '6')
                     ->orderBy('tb_post.id_post', 'desc')
                     ->get();
