@@ -237,4 +237,10 @@ Route::group(['as' => 'user'], function () {
 
     Route::get('/prosesicr/{id_prosesi}/{id_yadnya}','ProsesiListController@detailProsesiCopyReference');
 
+    #Dharmagita
+    Route::get('/listalldharmagita','DharmagitaController@listAllDharmagita');
+    Route::get('/detaillistdharmagita/{id_post}','DharmagitaController@detailListDharmagita');
+    Route::get('/detaildharmagita/{id_post}','DharmagitaController@detailDharmagita');
+    Route::get('/detailbaitdharmagita/{id_post}','DharmagitaController@detailBaitDharmagita');
+    Route::get('/detailpupuhdharmagita/{id_post}','DharmagitaController@detailPupuhDharmagita');
 });
