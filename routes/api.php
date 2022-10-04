@@ -242,5 +242,17 @@ Route::group(['as' => 'user'], function () {
     Route::get('/detaillistdharmagita/{id_post}','DharmagitaController@detailListDharmagita');
     Route::get('/detaildharmagita/{id_post}','DharmagitaController@detailDharmagita');
     Route::get('/detailbaitdharmagita/{id_post}','DharmagitaController@detailBaitDharmagita');
-    Route::get('/detailpupuhdharmagita/{id_post}','DharmagitaController@detailPupuhDharmagita');
+    Route::get('/listdharmagitaterbaru','DharmagitaController@listDharmagitaTerbaru');
+    Route::get('/listvideo/{id_post}','DharmagitaController@listVideo');
+    Route::get('/listaudio/{id_post}','DharmagitaController@listAudio');
+
+    #Pupuh
+    Route::get('/listallpupuh','PupuhController@listAllPupuh');
+    Route::get('/listkategoripupuh/{id_post}','PupuhController@listKategoriPupuh');
+
+    #Lagu Anak
+    Route::get('/listalllaguanak','LaguAnakController@listAllLaguAnak');
+
+    #Kakawin
+    Route::get('/listallkakawin','KakawinController@listAllKakawin');
 });

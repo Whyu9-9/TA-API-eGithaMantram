@@ -9,6 +9,9 @@ use App\M_Post;
 use App\M_Det_Post;
 use App\M_Tag;
 use App\M_Det_Dharmagita;
+use App\M_Video;
+use App\M_Audio;
+
 
 class DharmagitaController extends Controller
 {
@@ -112,38 +115,81 @@ class DharmagitaController extends Controller
         return response()->json($data);
     }
 
-    public function detailPupuhDharmagita($id_post)
+    public function listVideo($id_post)
     {
-        $det_pros = M_Tag::where('tb_detil_post.id_post', $id_post)
-                                ->where('tb_detil_post.id_tag', '10')
-                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
-                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
-                                ->select('tb_post.nama_post', 
-                                        'tb_post.gambar',
-                                        'tb_detil_post.id_post', 
-                                        'tb_detil_post.id_parent_post', 
-                                        'tb_detil_post.id_tag',)
-                                ->orderBy('tb_detil_post.posisi', 'ASC')
-                                ->get();
+        $det_pros = M_Video::where('tb_video.id_dharmagita',$id_post)
+                            ->select('tb_video.id_video',
+                                    'tb_video.id_dharmagita',
+                                    'tb_video.video')
+                            ->get();
         if($det_pros->count() > 0) {
             foreach ($det_pros as $d_pros) {
                 $new_pros[] = (object) array(
-                    'id_post'   => $d_pros->id_parent_post,
-                    'nama_post' => $d_pros->nama_post,
-                    'gambar'    => $d_pros->gambar,
+                    'id_video'   => $d_pros->id_video,
+                    'id_dharmagita' => $d_pros->id_dharmagita,
+                    'video'    => $d_pros->video,
                 );
             }
-
+                    
             $data = [
                 'data' => $new_pros,
             ];
-        } else {
-            $data = [
+            } else {
+                 $data = [
                 'data' => [],
-            ];
+                ];
+            }
+        return response()->json($det_pros);
+    }
+
+    public function listDharmagitaTerbaru()
+    {
+        $datas = M_Post::where('tb_post.id_tag', '=', '9')
+                    ->orWhere('tb_post.id_tag', '=', '4')
+                    ->orWhere('tb_post.id_tag', '=', '10')
+                    ->orWhere('tb_post.id_tag', '=', '11')
+                    ->where('tb_post.is_approved', 1)
+                    ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.nama_post', 'tb_post.deskripsi')
+                    ->orderBy('tb_post.id_post', 'desc')
+                    ->limit(6)
+                    ->get();
+        foreach ($datas as $data) {
+            $new_gita[]=(object) array(
+                'id_post'     => $data->id_post,
+                'nama_post'   => $data->nama_post,
+                'gambar'      => $data->gambar,
+            );
         }
+        $arr = [
+            "data" => $new_gita
+        ];
+        return response()->json($arr);
+    }
 
-
-        return response()->json($data);
+    public function listAudio($id_post)
+    {
+        $det_pros = M_Audio::where('tb_audio.id_dharmagita',$id_post)
+                            ->select('tb_audio.id_audio',
+                                    'tb_audio.id_dharmagita',
+                                    'tb_audio.audio')
+                            ->get();
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'id_audio'   => $d_pros->id_audio,
+                    'id_audio' => $d_pros->id_audio,
+                    'audio'    => $d_pros->audio,
+                );
+            }
+                    
+            $data = [
+                'data' => $new_pros,
+            ];
+            } else {
+                 $data = [
+                'data' => [],
+                ];
+            }
+        return response()->json($det_pros);
     }
 }
