@@ -248,11 +248,18 @@ Route::group(['as' => 'user'], function () {
 
     #Pupuh
     Route::get('/listallpupuh','PupuhController@listAllPupuh');
+    Route::get('/listpupuhterbaru','PupuhController@listPupuhTerbaru');
     Route::get('/listkategoripupuh/{id_post}','PupuhController@listKategoriPupuh');
+    Route::get('/detailpupuh/{id_post}','PupuhController@detailPupuh');
+    Route::get('/detailbaitpupuh/{id_post}','PupuhController@detailBaitPupuh');
 
     #Lagu Anak
     Route::get('/listalllaguanak','LaguAnakController@listAllLaguAnak');
+    Route::get('/detaillaguanak/{id_post}','LaguAnakController@detailLaguAnak');
+    Route::get('/detailbaitlaguanak/{id_post}','LaguAnakController@detailBaitLaguAnak');
 
     #Kakawin
     Route::get('/listallkakawin','KakawinController@listAllKakawin');
+    Route::get('/detailkakawin/{id_post}','KakawinController@detailKakawin');
+    Route::get('/detailbaitkakawin/{id_post}','KakawinController@detailKakawin');
 });
