@@ -42,6 +42,37 @@ class KakawinController extends Controller
         }
     }
 
+    public function listKategoriKakawin($id_kakawin)
+    {
+        $datas = M_Tag::where('tb_detil_post.id_root_post', $id_kakawin)
+                                ->where('tb_detil_post.id_tag', '11')
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',)
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+                                foreach ($datas as $data) {
+                                    $new_yadnya[]=(object) array(
+                                        'id_post'     => $data->id_parent_post,
+                                        'id_kategori' => $data->id_kategori,
+                                        'kategori'    => $data->nama_kategori,
+                                        'nama_post'   => $data->nama_post,
+                                        'gambar'      => $data->gambar,
+                                    );
+                                }
+                        
+                                if(isset($new_yadnya)){
+                                    return response()->json($new_yadnya);
+                                }else {
+                                    $new_yadnya = [];
+                                    return response()->json($new_yadnya);
+                                }
+    }
+
     public function detailKakawin($id_post)
     {
         $kategori_post = M_Post::where('tb_post.id_post',$id_post)

@@ -8,6 +8,6 @@ class M_Video extends Model
 {
     protected $table = 'tb_video';
     protected $primaryKey = 'id_video';
-    protected $fillable = ['id_dharmagita','video'];
+    protected $fillable = ['id_dharmagita','judul_video','gambar_video','video'];
     public $timestamps = false;
 }

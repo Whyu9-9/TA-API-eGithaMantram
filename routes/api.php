@@ -257,6 +257,9 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listalllaguanak','LaguAnakController@listAllLaguAnak');
     Route::get('/detaillaguanak/{id_post}','LaguAnakController@detailLaguAnak');
     Route::get('/detailbaitlaguanak/{id_post}','LaguAnakController@detailBaitLaguAnak');
+    Route::get('/listkategorilaguanak/{id_post}','LaguAnakController@listKategoriLaguAnak');
+    Route::get('/listvideolaguanak/{id_lagu_anak}','LaguAnakController@listVideoLaguAnak');
+    Route::get('/listaudiolaguanak/{id_post}','LaguAnakController@listAudioLaguAnak');
 
     #Kakawin
     Route::get('/listallkakawin','KakawinController@listAllKakawin');

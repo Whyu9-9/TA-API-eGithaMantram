@@ -79,7 +79,7 @@ class PupuhController extends Controller
                                 ->get();
                                 foreach ($datas as $data) {
                                     $new_yadnya[]=(object) array(
-                                        'id_post'     => $data->id_post,
+                                        'id_post'     => $data->id_parent_post,
                                         'id_kategori' => $data->id_kategori,
                                         'kategori'    => $data->nama_kategori,
                                         'nama_post'   => $data->nama_post,
