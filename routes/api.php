@@ -206,6 +206,8 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listallkidung','KidungListController@listAllKidung');
     Route::get('/detailkidung/{id_post}','KidungListController@detailKidung');
     Route::get('/detailbaitkidung/{id_post}','KidungListController@detailBaitKidung');
+    Route::get('/listvideokidung/{id_kidung}','KidungListController@listVideoKidung');
+    Route::get('/listaudiokidung/{id_post}','KidungListController@listAudioKidung');
     Route::get('/yadnyakidung/{id_post}','KidungListController@YadnyaKidung');
 
     #mantram
