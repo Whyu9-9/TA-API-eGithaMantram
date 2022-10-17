@@ -270,6 +270,9 @@ Route::group(['as' => 'user'], function () {
     #Kakawin
     Route::get('/listallkakawin','KakawinController@listAllKakawin');
     Route::get('/detailkakawin/{id_post}','KakawinController@detailKakawin');
-    Route::get('/detailbaitkakawin/{id_post}','KakawinController@detailKakawin');
+    Route::get('/detailbaitkakawin/{id_post}','KakawinController@detailBaitKakawin');
     Route::get('/listkategorikakawin/{id_post}','KakawinController@listKategoriKakawin');
+    Route::get('/listvideokakawin/{id_kakawin}','KakawinController@listVideoKakawin');
+    Route::get('/listaudiokakawin/{id_post}','KakawinController@listAudioKakawin');
+    Route::get('/yadnyakakawin/{id_kakawin}','KakawinController@YadnyaKakawin');
 });
