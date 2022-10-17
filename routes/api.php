@@ -206,6 +206,7 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listallkidung','KidungListController@listAllKidung');
     Route::get('/detailkidung/{id_post}','KidungListController@detailKidung');
     Route::get('/detailbaitkidung/{id_post}','KidungListController@detailBaitKidung');
+    Route::get('/yadnyakidung/{id_post}','KidungListController@YadnyaKidung');
 
     #mantram
     Route::get('/listmantramterbaru','MantramListController@listMantramTerbaru');
@@ -260,9 +261,11 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listkategorilaguanak/{id_post}','LaguAnakController@listKategoriLaguAnak');
     Route::get('/listvideolaguanak/{id_lagu_anak}','LaguAnakController@listVideoLaguAnak');
     Route::get('/listaudiolaguanak/{id_post}','LaguAnakController@listAudioLaguAnak');
+    Route::get('/yadnyalaguanak/{id_lagu_anak}','LaguAnakController@YadnyaLaguAnak');
 
     #Kakawin
     Route::get('/listallkakawin','KakawinController@listAllKakawin');
     Route::get('/detailkakawin/{id_post}','KakawinController@detailKakawin');
     Route::get('/detailbaitkakawin/{id_post}','KakawinController@detailKakawin');
+    Route::get('/listkategorikakawin/{id_post}','KakawinController@listKategoriKakawin');
 });

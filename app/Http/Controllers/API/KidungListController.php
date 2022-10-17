@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\M_Post;
 use App\M_Det_Kidung;
+use App\M_Tag;
 
 class KidungListController extends Controller
 {
@@ -35,7 +36,7 @@ class KidungListController extends Controller
     public function listAllKidung()
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
-                    ->select('tb_post.id_post','tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post')
+                    ->select('tb_post.id_post','tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.deskripsi')
                     // ->where('tb_post.is_approved', 1)
                     ->where('tb_post.id_tag', '=', '4')->orderBy('tb_post.id_post', 'desc')
                     ->get();
@@ -48,6 +49,7 @@ class KidungListController extends Controller
                     'kategori'    => $data->nama_kategori,
                     'nama_post'   => $data->nama_post,
                     'gambar'      => $data->gambar,
+                    'deskripsi'      => $data->deskripsi,
                 );
             }
         }else{
@@ -94,5 +96,29 @@ class KidungListController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function YadnyaKidung($id_kidung)
+    {
+        $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                 ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar')
+                 ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_post')
+                ->where('tb_post.is_approved', 1)
+                ->where('tb_post.id_kategori', '!=', null)
+                ->where('tb_detil_post.id_tag', '=', '4')
+                ->where('tb_detil_post.id_parent_post', $id_kidung)
+                ->orderBy('tb_post.id_post', 'desc')
+                ->get();
+        foreach ($datas as $data) {
+            $yadnya[]=(object) array(
+                'id_post'     => $data->id_post,
+                'id_kategori' => $data->id_kategori,
+                'kategori'    => $data->nama_kategori,
+                'nama_post'   => $data->nama_post,
+                'gambar'      => $data->gambar,
+            );
+        }
+
+        return response()->json($yadnya);
     }
 }

@@ -315,4 +315,5 @@ class YadnyaListController extends Controller
     public function setProsesiPositionUp($id_post, $id_pros){
 
     }
+
 }

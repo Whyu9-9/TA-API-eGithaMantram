@@ -30,6 +30,7 @@ class LaguAnakController extends Controller
                 'kategori'    => $data->nama_kategori,
                 'nama_post'   => $data->nama_post,
                 'gambar'      => $data->gambar,
+                'deskripsi'      => $data->deskripsi,
             );
         }
 
@@ -58,6 +59,7 @@ class LaguAnakController extends Controller
                                     $new_yadnya[]=(object) array(
                                         'id_post'     => $data->id_parent_post,
                                         'id_kategori' => $data->id_kategori,
+                                        'id_tag'      => $data->id_tag,
                                         'kategori'    => $data->nama_kategori,
                                         'nama_post'   => $data->nama_post,
                                         'gambar'      => $data->gambar,
@@ -157,6 +159,33 @@ class LaguAnakController extends Controller
                                 "data" => $new_kidung
                             ];
                             return response()->json($arr);
+    }
+
+    public function YadnyaLaguAnak($id_lagu_anak)
+    {
+        $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                 ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar')
+                 ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_post')
+                ->where('tb_post.is_approved', 1)
+                ->where('tb_post.id_kategori', '!=', null)
+                ->where('tb_detil_post.id_tag', '=', '9')
+                ->where('tb_detil_post.id_parent_post', $id_lagu_anak)
+                ->orderBy('tb_post.id_post', 'desc')
+                ->get();
+                foreach ($datas as $data) {
+                    $new_kidung[]=(object) array(
+                        'id_post'     => $data->id_post,
+                        'id_kategori' => $data->id_kategori,
+                        'kategori'    => $data->nama_kategori,
+                        'nama_post'   => $data->nama_post,
+                        'gambar'      => $data->gambar,
+                        
+                    );
+                }
+                $arr = [
+                    "data" => $new_kidung
+                ];
+                return response()->json($arr);
     }
 
 }

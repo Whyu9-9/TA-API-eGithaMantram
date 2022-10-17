@@ -17,8 +17,7 @@ class KakawinController extends Controller
     public function listAllKakawin()
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
-                    ->leftJoin('tb_detail_sekar_agung','tb_post.id_post','=','tb_detail_sekar_agung.sekar_agung_id')
-                    ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.deskripsi', 'tb_detail_sekar_agung.jenis_sekar_agung')
+                    ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.deskripsi')
                     ->where('tb_post.id_tag', '=', '11')
                     ->orderBy('tb_post.id_post', 'desc')
                     ->get();
@@ -30,7 +29,7 @@ class KakawinController extends Controller
                 'kategori'    => $data->nama_kategori,
                 'nama_post'   => $data->nama_post,
                 'gambar'      => $data->gambar,
-                'jenis_sekar_agung' => $data->jenis_sekar_agung,
+                'deskripsi'      => $data->deskripsi,
             );
         }
 

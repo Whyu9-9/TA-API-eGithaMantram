@@ -53,6 +53,7 @@ class PupuhController extends Controller
                 'kategori'    => $data->nama_kategori,
                 'nama_post'   => $data->nama_post,
                 'gambar'      => $data->gambar,
+                'deskripsi'      => $data->deskripsi,
             );
         }
 
