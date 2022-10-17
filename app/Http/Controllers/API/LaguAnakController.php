@@ -52,7 +52,8 @@ class LaguAnakController extends Controller
                                         'tb_post.gambar',
                                         'tb_detil_post.id_post', 
                                         'tb_detil_post.id_parent_post', 
-                                        'tb_detil_post.id_tag',)
+                                        'tb_detil_post.id_tag',
+                                        'tb_tag.nama_tag')
                                 ->orderBy('tb_detil_post.posisi', 'ASC')
                                 ->get();
                                 foreach ($datas as $data) {
@@ -62,6 +63,7 @@ class LaguAnakController extends Controller
                                         'id_tag'      => $data->id_tag,
                                         'kategori'    => $data->nama_kategori,
                                         'nama_post'   => $data->nama_post,
+                                        'nama_tag'   => $data->nama_tag,
                                         'gambar'      => $data->gambar,
                                     );
                                 }
@@ -172,6 +174,7 @@ class LaguAnakController extends Controller
                 ->where('tb_detil_post.id_parent_post', $id_lagu_anak)
                 ->orderBy('tb_post.id_post', 'desc')
                 ->get();
+                if($datas->count() > 0) {
                 foreach ($datas as $data) {
                     $new_kidung[]=(object) array(
                         'id_post'     => $data->id_post,
@@ -185,6 +188,11 @@ class LaguAnakController extends Controller
                 $arr = [
                     "data" => $new_kidung
                 ];
+            }else {
+                $arr = [
+                    'data' => [],
+                ];
+            }
                 return response()->json($arr);
     }
 

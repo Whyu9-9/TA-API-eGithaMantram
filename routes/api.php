@@ -246,6 +246,7 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listdharmagitaterbaru','DharmagitaController@listDharmagitaTerbaru');
     Route::get('/listvideo/{id_post}','DharmagitaController@listVideo');
     Route::get('/listaudio/{id_post}','DharmagitaController@listAudio');
+    Route::get('/listallgita','DharmagitaController@listAllGita');
 
     #Pupuh
     Route::get('/listallpupuh','PupuhController@listAllPupuh');
@@ -253,6 +254,9 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listkategoripupuh/{id_post}','PupuhController@listKategoriPupuh');
     Route::get('/detailpupuh/{id_post}','PupuhController@detailPupuh');
     Route::get('/detailbaitpupuh/{id_post}','PupuhController@detailBaitPupuh');
+    Route::get('/listvideopupuh/{id_pupuh}','PupuhController@listVideoPupuh');
+    Route::get('/listaudiopupuh/{id_post}','PupuhController@listAudioPupuh');
+    Route::get('/yadnyapupuh/{id_pupuh}','PupuhController@YadnyaPupuh');
 
     #Lagu Anak
     Route::get('/listalllaguanak','LaguAnakController@listAllLaguAnak');

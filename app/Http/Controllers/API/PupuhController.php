@@ -75,7 +75,8 @@ class PupuhController extends Controller
                                         'tb_post.gambar',
                                         'tb_detil_post.id_post', 
                                         'tb_detil_post.id_parent_post', 
-                                        'tb_detil_post.id_tag',)
+                                        'tb_detil_post.id_tag',
+                                        'tb_tag.nama_tag')
                                 ->orderBy('tb_detil_post.posisi', 'ASC')
                                 ->get();
                                 foreach ($datas as $data) {
@@ -84,6 +85,7 @@ class PupuhController extends Controller
                                         'id_kategori' => $data->id_kategori,
                                         'kategori'    => $data->nama_kategori,
                                         'nama_post'   => $data->nama_post,
+                                        'nama_tag'   => $data->nama_tag,
                                         'gambar'      => $data->gambar,
                                     );
                                 }
@@ -133,6 +135,87 @@ class PupuhController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function listVideoPupuh($id_pupuh)
+    {
+        $datas = M_Video::where('tb_video.id_dharmagita',$id_pupuh)
+                            ->select('tb_video.id_video',
+                                    'tb_video.id_dharmagita',
+                                    'tb_video.judul_video',
+                                    'tb_video.gambar_video',
+                                    'tb_video.video')
+                            ->get();
+                            foreach ($datas as $data) {
+                                $new_kidung[]=(object) array(
+                                    'id_video'     => $data->id_video,
+                                    'id_dharmagita' => $data->id_dharmagita,
+                                    'judul_video'   => $data->judul_video,
+                                    'gambar_video'  => $data->gambar_video,
+                                    'video'         => $data->video,
+                                );
+                            }
+                            $arr = [
+                                "data" => $new_kidung
+                            ];
+                            return response()->json($arr);
+    }
+
+    public function listAudioPupuh($id_post)
+    {
+        $datas = M_Audio::where('tb_audio.id_dharmagita',$id_post)
+                            ->select('tb_audio.id_audio',
+                                    'tb_audio.id_dharmagita',
+                                    'tb_audio.judul_audio',
+                                    'tb_audio.gambar_audio',
+                                    'tb_audio.audio')
+                            ->get();
+                            foreach ($datas as $data) {
+                                $new_kidung[]=(object) array(
+                                    'id_audio'     => $data->id_audio,
+                                    'id_dharmagita' => $data->id_dharmagita,
+                                    'judul_audio'   => $data->judul_audio,
+                                    'gambar_audio'  => $data->gambar_audio,
+                                    'audio'         => $data->audio,
+                                );
+                            }
+                            $arr = [
+                                "data" => $new_kidung
+                            ];
+                            return response()->json($arr);
+    }
+
+    public function YadnyaPupuh($id_pupuh)
+    {
+        $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                 ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar')
+                 ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_post')
+                ->where('tb_post.is_approved', 1)
+                ->where('tb_post.id_kategori', '!=', null)
+                ->where('tb_detil_post.id_tag', '=', '10')
+                ->where('tb_detil_post.id_parent_post', $id_pupuh)
+                ->orderBy('tb_post.id_post', 'desc')
+                ->get();
+                if($datas->count() > 0) {
+                foreach ($datas as $data) {
+                    $new_kidung[]=(object) array(
+                        'id_post'     => $data->id_post,
+                        'id_kategori' => $data->id_kategori,
+                        'kategori'    => $data->nama_kategori,
+                        'nama_post'   => $data->nama_post,
+                        'gambar'      => $data->gambar,
+                        
+                    );
+                }
+                $arr = [
+                    "data" => $new_kidung
+                ];
+            }else {
+                    $arr = [
+                        'data' => [],
+                    ];
+                }
+                return response()->json($arr);
     }
 
 }

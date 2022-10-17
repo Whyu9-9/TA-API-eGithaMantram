@@ -192,4 +192,33 @@ class DharmagitaController extends Controller
             }
         return response()->json($det_pros);
     }
+    
+    public function listAllGita()
+    {
+        $datas = M_Post::distinct()
+                    ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                    ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_parent_post')
+                    ->leftJoin('tb_tag','tb_detil_post.id_tag','=','tb_tag.id_tag')
+                    ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar', 'tb_detil_post.id_tag','tb_tag.nama_tag')
+                    ->where('tb_post.is_approved', 1)
+                    ->where('tb_detil_post.id_tag', '=', '9')
+                    ->orWhere('tb_detil_post.id_tag', '=', '4')
+                    ->orWhere('tb_detil_post.id_tag', '=', '10')
+                    ->orWhere('tb_detil_post.id_tag', '=', '11')
+                    ->orderBy('tb_post.id_post', 'desc')
+                    ->get();
+        foreach ($datas as $data) {
+            $yadnya[]=(object) array(
+                'id_post'     => $data->id_post,
+                'id_kategori' => $data->id_kategori,
+                'id_tag'      => $data->id_tag,
+                'kategori'    => $data->nama_kategori,
+                'nama_post'   => $data->nama_post,
+                'nama_tag'   => $data->nama_tag,
+                'gambar'      => $data->gambar,
+            );
+        }
+
+        return response()->json($yadnya);
+    }
 }
