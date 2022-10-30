@@ -169,7 +169,9 @@ Route::group(['as' => 'admin'], function () {
 
     #yadnyaHome
     Route::get('/admin/listyadnya','Admin\HomeController@listYadnyaMaster');
+    Route::get('/admin/listdharmagita','Admin\HomeController@listDharmagitaMaster');
     Route::get('/admin/yadnya/{nama_yadnya}','Admin\HomeController@selectedHomeYadnya');
+    Route::get('/admin/dharmagita/{id_post}','Admin\HomeController@selectedHomeDharmagita');
 
     #mantram
     Route::get('/admin/listallmantram','Admin\MantramController@listAllMantramAdmin');
@@ -185,6 +187,20 @@ Route::group(['as' => 'admin'], function () {
     Route::get('/admin/listnotapprovedmantram', 'Admin\MantramController@listNotApprovedMantram');
     Route::get('/admin/detailneedapprovalmantram/{id_post}', 'Admin\MantramController@detailMantramNeedApprovalAdmin');
     Route::post('/admin/approvemantram/{id_post}', 'Admin\MantramController@approveMantram');
+
+    #pupuh
+    Route::get('/admin/listallpupuhadmin','Admin\PupuhAdminController@listAllPupuhAdmin');
+    Route::get('/admin/listkategoripupuhadmin/{id_post}','Admin\PupuhAdminController@listKategoriPupuhAdmin');
+    Route::get('/admin/detailpupuhadmin/{id_post}','Admin\PupuhAdminController@detailPupuhAdmin');
+    Route::get('/admin/detailbaitpupuhadmin/{id_post}','Admin\PupuhAdminController@detailBaitPupuhAdmin');
+    Route::get('/admin/listvideopupuhadmin/{id_pupuh}','Admin\PupuhAdminController@listVideoPupuhAdmin');
+    Route::get('/admin/listaudiopupuhadmin/{id_post}','Admin\PupuhAdminController@listAudioPupuhAdmin');
+    Route::get('/admin/yadnyapupuhadmin/{id_pupuh}','Admin\PupuhAdminController@YadnyaPupuhAdmin');
+    Route::post('/admin/createpupuhadmin','Admin\PupuhAdminController@createPupuhAdmin');
+    Route::post('/admin/editpupuhadmin/{id_post}', 'Admin\PupuhAdminController@updatePupuhAdmin');
+    Route::post('/admin/deletepupuhadmin/{id_post}', 'Admin\PupuhvController@deletePupuhAdmin');
+    Route::post('/admin/addvideoonpupuhadmin/{id_post}', 'Admin\PupuhvController@addVideoToPupuhAdmin');
+    Route::post('/admin/deletevideoonpupuhadmin/{id_post}', 'Admin\PupuhvController@deleteVideoFromPupuhAdmin');
 });
 
 Route::group(['as' => 'user'], function () {
@@ -259,6 +275,11 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listvideopupuh/{id_pupuh}','PupuhController@listVideoPupuh');
     Route::get('/listaudiopupuh/{id_post}','PupuhController@listAudioPupuh');
     Route::get('/yadnyapupuh/{id_pupuh}','PupuhController@YadnyaPupuh');
+    Route::post('/createpupuh','PupuhController@createPupuh');
+    Route::post('/editpupuh/{id_post}', 'PupuhController@updatePupuh');
+    Route::post('/deletepupuh/{id_post}', 'PupuhController@deletePupuh');
+    Route::post('/addvideoonpupuh/{id_post}', 'PupuhController@addVideoToPupuh');
+    Route::post('/deletevideoonpupuh/{id_post}', 'PupuhController@deleteVideoFromPupuh');
 
     #Lagu Anak
     Route::get('/listalllaguanak','LaguAnakController@listAllLaguAnak');

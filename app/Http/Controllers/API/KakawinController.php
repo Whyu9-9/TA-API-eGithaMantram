@@ -123,6 +123,7 @@ class KakawinController extends Controller
                                     'tb_video.gambar_video',
                                     'tb_video.video')
                             ->get();
+                            if($datas->count() > 0) {
                             foreach ($datas as $data) {
                                 $new_kidung[]=(object) array(
                                     'id_video'     => $data->id_video,
@@ -135,6 +136,11 @@ class KakawinController extends Controller
                             $arr = [
                                 "data" => $new_kidung
                             ];
+                        }else {
+                            $arr = [
+                                'data' => [],
+                            ];
+                        }
                             return response()->json($arr);
     }
 
@@ -147,6 +153,7 @@ class KakawinController extends Controller
                                     'tb_audio.gambar_audio',
                                     'tb_audio.audio')
                             ->get();
+                            if($datas->count() > 0) {
                             foreach ($datas as $data) {
                                 $new_kidung[]=(object) array(
                                     'id_audio'     => $data->id_audio,
@@ -159,6 +166,11 @@ class KakawinController extends Controller
                             $arr = [
                                 "data" => $new_kidung
                             ];
+                        }else {
+                            $arr = [
+                                'data' => [],
+                            ];
+                        }
                             return response()->json($arr);
     }
 

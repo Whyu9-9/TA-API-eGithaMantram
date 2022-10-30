@@ -1,44 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\M_Kategori;
-use App\M_Post;
-use App\M_Det_Post;
-use App\M_Tag;
-use App\M_Det_Dharmagita;
-use App\M_Video;
-use App\M_Audio;
-use App\M_Det_Pupuh;
 
-class PupuhController extends Controller
+class PupuhAdminController extends Controller
 {
-    public function listPupuhTerbaru()
-    {
-        $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
-                    ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post')
-                    // ->where('tb_post.is_approved', 1)
-                    ->where('tb_post.id_tag', '=', '10')->orderBy('tb_post.id_post', 'desc')
-                    ->limit(6)
-                    ->get();
-        foreach ($datas as $data) {
-            $new_kidung[]=(object) array(
-                'id_post'     => $data->id_post,
-                'id_kategori' => $data->id_kategori,
-                'id_tag'      => $data->id_tag,
-                'kategori'    => $data->nama_kategori,
-                'nama_post'   => $data->nama_post,
-            );
-        }
-        $arr = [
-            "data" => $new_kidung
-        ];
-        return response()->json($arr);
-    }
-
-    public function listAllPupuh()
+    public function listAllPupuhAdmin()
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.deskripsi')
@@ -65,7 +33,7 @@ class PupuhController extends Controller
         }
     }
 
-    public function listKategoriPupuh($id_pupuh)
+    public function listKategoriPupuhAdmin($id_pupuh)
     {
         $datas = M_Tag::where('tb_detil_post.id_post', $id_pupuh)
                                 ->where('tb_detil_post.id_tag', '10')
@@ -98,7 +66,7 @@ class PupuhController extends Controller
                                 }
     }
 
-    public function detailPupuh($id_post)
+    public function detailPupuhAdmin($id_post)
     {
         $kategori_post = M_Post::where('tb_post.id_post',$id_post)
                             ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
@@ -114,7 +82,7 @@ class PupuhController extends Controller
         return response()->json($kategori_post);
     }
 
-    public function detailBaitPupuh($id_post)
+    public function detailBaitPupuhAdmin($id_post)
     {
         $det_pros = M_Det_Pupuh::where('pupuh_id', $id_post)->orderBy('urutan_bait', 'ASC')->get();
         if($det_pros->count() > 0) {
@@ -137,7 +105,7 @@ class PupuhController extends Controller
         return response()->json($data);
     }
 
-    public function listVideoPupuh($id_pupuh)
+    public function listVideoPupuhAdmin($id_pupuh)
     {
         $datas = M_Video::where('tb_video.id_dharmagita',$id_pupuh)
                             ->select('tb_video.id_video',
@@ -167,7 +135,7 @@ class PupuhController extends Controller
                             return response()->json($arr);
     }
 
-    public function listAudioPupuh($id_post)
+    public function listAudioPupuhAdmin($id_post)
     {
         $datas = M_Audio::where('tb_audio.id_dharmagita',$id_post)
                             ->select('tb_audio.id_audio',
@@ -197,7 +165,7 @@ class PupuhController extends Controller
                             return response()->json($arr);
     }
 
-    public function YadnyaPupuh($id_pupuh)
+    public function YadnyaPupuhAdmin($id_pupuh)
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                  ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar')
@@ -230,7 +198,7 @@ class PupuhController extends Controller
                 return response()->json($arr);
     }
 
-    public function createPupuh(Request $request)
+    public function createPupuhAdmin(Request $request)
     {
     
         $data              = new M_Post;
@@ -268,7 +236,7 @@ class PupuhController extends Controller
         }
     }
 
-    public function updatePupuh(Request $request, $id_post)
+    public function updatePupuhAdmin(Request $request, $id_post)
     {
         $data              = M_Post::where('id_post',$id_post)->first();
         $data->nama_post   = $request->nama_post;
@@ -295,7 +263,7 @@ class PupuhController extends Controller
         }
     }
 
-    public function deletePupuh($id_post)
+    public function deletePupuhAdmin($id_post)
     {
         $datas = M_Det_Post::where('id_parent_post',$id_post)->first();
         $datas->delete();
@@ -313,7 +281,7 @@ class PupuhController extends Controller
         }
     }
 
-    public function listBaitPupuh($id_post)
+    public function listBaitPupuhAdmin($id_post)
     {
         $det_pros = M_Det_Pupuh::where('pupuh_id', $id_post)->orderBy('urutan_bait', 'ASC')->get();
         foreach ($det_pros as $d_pros) {
@@ -327,7 +295,7 @@ class PupuhController extends Controller
 
     }
 
-    public function addLirikPupuh(Request $request, $id_post){
+    public function addLirikPupuhAdmin(Request $request, $id_post){
         $getLatestUrutan = M_Det_Pupuh::select('urutan_bait')->where('pupuh_id', $id_post)->orderBy('urutan_bait', 'DESC')->first();
 
         $data = new M_Det_Pupuh;
@@ -353,12 +321,12 @@ class PupuhController extends Controller
         }
     }
 
-    public function showLirikPupuh($id_det_post){
+    public function showLirikPupuhAdmin($id_det_post){
         $data = M_Det_Pupuh::where('id', $id_det_post)->first();
         return response()->json($data);
     }
 
-    public function updateLirikPupuh(Request $request, $id_det_post){
+    public function updateLirikPupuhAdmin(Request $request, $id_det_post){
         $data = M_Det_Pupuh::where('id', $id_det_post)->first();
         $data->bait_pupuh = $request->bait_pupuh;
 
@@ -375,7 +343,7 @@ class PupuhController extends Controller
         }
     }
 
-    public function deleteLirikPupuh(Request $request, $id)
+    public function deleteLirikPupuhAdmin(Request $request, $id)
     {
         $data = M_Det_Pupuh::where('id', $id)->first();
         if($data->delete()){
@@ -398,7 +366,7 @@ class PupuhController extends Controller
         }
     }
 
-    public function addVideoToPupuh(Request $request, $id_post){
+    public function addVideoToPupuhAdmin(Request $request, $id_post){
         $data = new M_Video;
         $data->id_dharmagita = $id_post;
         $data->judul_video  = $request->judul_video;
@@ -419,7 +387,7 @@ class PupuhController extends Controller
         }
     }
 
-    public function deleteVideoFromPupuh($id_post){
+    public function deleteVideoFromPupuhAdmin($id_post){
         $data = M_Video::where('id_video', $id_post)
                             ->first();
         if($data->delete()){
