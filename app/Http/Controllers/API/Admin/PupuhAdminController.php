@@ -3,6 +3,17 @@
 namespace App\Http\Controllers\API\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
+use App\M_Kategori;
+use App\M_Post;
+use App\M_Det_Post;
+use App\M_Tag;
+use App\M_Det_Dharmagita;
+use App\M_Video;
+use App\M_Audio;
+use App\M_Det_Pupuh;
+use DB;
 
 class PupuhAdminController extends Controller
 {

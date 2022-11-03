@@ -198,9 +198,9 @@ Route::group(['as' => 'admin'], function () {
     Route::get('/admin/yadnyapupuhadmin/{id_pupuh}','Admin\PupuhAdminController@YadnyaPupuhAdmin');
     Route::post('/admin/createpupuhadmin','Admin\PupuhAdminController@createPupuhAdmin');
     Route::post('/admin/editpupuhadmin/{id_post}', 'Admin\PupuhAdminController@updatePupuhAdmin');
-    Route::post('/admin/deletepupuhadmin/{id_post}', 'Admin\PupuhvController@deletePupuhAdmin');
-    Route::post('/admin/addvideoonpupuhadmin/{id_post}', 'Admin\PupuhvController@addVideoToPupuhAdmin');
-    Route::post('/admin/deletevideoonpupuhadmin/{id_post}', 'Admin\PupuhvController@deleteVideoFromPupuhAdmin');
+    Route::post('/admin/deletepupuhadmin/{id_post}', 'Admin\PupuhAdminController@deletePupuhAdmin');
+    Route::post('/admin/addvideoonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@addVideoToPupuhAdmin');
+    Route::post('/admin/deletevideoonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@deleteVideoFromPupuhAdmin');
 });
 
 Route::group(['as' => 'user'], function () {
