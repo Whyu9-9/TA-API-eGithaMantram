@@ -199,8 +199,17 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/admin/createpupuhadmin','Admin\PupuhAdminController@createPupuhAdmin');
     Route::post('/admin/editpupuhadmin/{id_post}', 'Admin\PupuhAdminController@updatePupuhAdmin');
     Route::post('/admin/deletepupuhadmin/{id_post}', 'Admin\PupuhAdminController@deletePupuhAdmin');
+    Route::get('/admin/showpupuh/{id_post}','Admin\PupuhAdminController@showPupuh');
+
     Route::post('/admin/addvideoonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@addVideoToPupuhAdmin');
     Route::post('/admin/deletevideoonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@deleteVideoFromPupuhAdmin');
+    Route::post('/admin/editvideopupuhadmin/{id_post}', 'Admin\PupuhAdminController@updateVideoPupuhAdmin');
+
+    Route::get('/admin/listbaitpupuhadmin/{id_post}', 'Admin\PupuhAdminController@listBaitPupuhAdmin');
+    Route::post('/admin/addlirikpupuhadmin/{id_post}', 'Admin\PupuhAdminController@addLirikPupuhAdmin');
+    Route::get('/admin/showlirikpupuhadmin/{id_det_post}','Admin\PupuhAdminController@showLirikPupuhAdmin');
+    Route::post('/admin/editlirikpupuhadmin/{id_det_post}', 'Admin\PupuhAdminController@updateLirikPupuhAdmin');
+    Route::post('/admin/deletelirikpupuhadmin/{id_post}', 'Admin\PupuhAdminController@deleteLirikPupuhAdmin');
 });
 
 Route::group(['as' => 'user'], function () {

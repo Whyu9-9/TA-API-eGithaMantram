@@ -274,6 +274,21 @@ class PupuhAdminController extends Controller
         }
     }
 
+    public function showPupuh($id_post)
+    {
+        $kategori_post = M_Post::where('tb_post.id_post',$id_post)
+                            ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                            ->select('tb_post.id_post',
+                                    'tb_post.nama_post',
+                                    'tb_post.gambar',
+                                    'tb_post.deskripsi',)
+                            ->first();
+        $kategori_post['deskripsi'] = filter_var($kategori_post->deskripsi, FILTER_SANITIZE_STRING);
+        $kategori_post['video'] = 'https://youtu.be/'.$kategori_post->video;
+
+        return response()->json($kategori_post);
+    }
+
     public function deletePupuhAdmin($id_post)
     {
         $datas = M_Det_Post::where('id_parent_post',$id_post)->first();
@@ -394,6 +409,25 @@ class PupuhAdminController extends Controller
             return response()->json([
                 'status' => 401,
                 'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
+
+    public function updateVideoPupuhAdmin(Request $request, $id_post){
+        $data = M_Video::where('id', $id_post)->first();
+        $data->judul_video  = $request->judul_video;
+        $data->gambar_video = $request->gambar_video;
+        $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal diubah'
             ]);
         }
     }
