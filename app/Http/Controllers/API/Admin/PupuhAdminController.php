@@ -392,6 +392,12 @@ class PupuhAdminController extends Controller
         }
     }
 
+    public function showVideoPupuhAdmin($id_post){
+        $data = M_Video::where('id_video', $id_post)->first();
+        $data['video'] = 'https://youtu.be/'.$data->video;
+        return response()->json($data);
+    }
+
     public function addVideoToPupuhAdmin(Request $request, $id_post){
         $data = new M_Video;
         $data->id_dharmagita = $id_post;
@@ -414,7 +420,7 @@ class PupuhAdminController extends Controller
     }
 
     public function updateVideoPupuhAdmin(Request $request, $id_post){
-        $data = M_Video::where('id', $id_post)->first();
+        $data = M_Video::where('id_video', $id_post)->first();
         $data->judul_video  = $request->judul_video;
         $data->gambar_video = $request->gambar_video;
         $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
@@ -434,6 +440,67 @@ class PupuhAdminController extends Controller
 
     public function deleteVideoFromPupuhAdmin($id_post){
         $data = M_Video::where('id_video', $id_post)
+                            ->first();
+        if($data->delete()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal dihapus'
+            ]);
+        }
+    }
+
+    public function showAudioPupuhAdmin($id_post){
+        $data = M_Audio::where('id_audio', $id_post)->first();
+        return response()->json($data);
+    }
+
+    public function addAudioToPupuhAdmin(Request $request, $id_post){
+        $data = new M_Audio;
+        $data->id_dharmagita = $id_post;
+        $data->judul_audio  = $request->judul_audio;
+        $data->gambar_audio = $request->gambar_audio;
+        $data->audio        = $request->audio;
+        $data->is_approved = 0;
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
+
+    public function updateAudioPupuhAdmin(Request $request, $id_post){
+        $data = M_Audio::where('id_audio', $id_post)->first();
+        $data->judul_audio  = $request->judul_audio;
+        $data->gambar_audio = $request->gambar_audio;
+        $data->audio        = $request->audio;
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal diubah'
+            ]);
+        }
+    }
+
+    public function deleteAudioFromPupuhAdmin($id_post){
+        $data = M_Audio::where('id_audio', $id_post)
                             ->first();
         if($data->delete()){
             return response()->json([

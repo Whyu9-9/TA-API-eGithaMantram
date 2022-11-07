@@ -201,6 +201,7 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/admin/deletepupuhadmin/{id_post}', 'Admin\PupuhAdminController@deletePupuhAdmin');
     Route::get('/admin/showpupuh/{id_post}','Admin\PupuhAdminController@showPupuh');
 
+    Route::get('/admin/showvideopupuhadmin/{id_post}','Admin\PupuhAdminController@showVideoPupuhAdmin');
     Route::post('/admin/addvideoonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@addVideoToPupuhAdmin');
     Route::post('/admin/deletevideoonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@deleteVideoFromPupuhAdmin');
     Route::post('/admin/editvideopupuhadmin/{id_post}', 'Admin\PupuhAdminController@updateVideoPupuhAdmin');
@@ -210,6 +211,11 @@ Route::group(['as' => 'admin'], function () {
     Route::get('/admin/showlirikpupuhadmin/{id_det_post}','Admin\PupuhAdminController@showLirikPupuhAdmin');
     Route::post('/admin/editlirikpupuhadmin/{id_det_post}', 'Admin\PupuhAdminController@updateLirikPupuhAdmin');
     Route::post('/admin/deletelirikpupuhadmin/{id_post}', 'Admin\PupuhAdminController@deleteLirikPupuhAdmin');
+
+    Route::get('/admin/showaudiopupuhadmin/{id_post}','Admin\PupuhAdminController@showAudioPupuhAdmin');
+    Route::post('/admin/addaudioonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@addAudioToPupuhAdmin');
+    Route::post('/admin/deleteaudioonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@deleteAudioFromPupuhAdmin');
+    Route::post('/admin/editaudiopupuhadmin/{id_post}', 'Admin\PupuhAdminController@updateAudioPupuhAdmin');
 });
 
 Route::group(['as' => 'user'], function () {
