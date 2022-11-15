@@ -179,7 +179,7 @@ class PupuhAdminController extends Controller
     public function YadnyaPupuhAdmin($id_pupuh)
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
-                 ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar')
+                 ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar', 'tb_detil_post.id_det_post',)
                  ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_post')
                 ->where('tb_post.is_approved', 1)
                 ->where('tb_post.id_kategori', '!=', null)
@@ -190,6 +190,7 @@ class PupuhAdminController extends Controller
                 if($datas->count() > 0) {
                 foreach ($datas as $data) {
                     $new_kidung[]=(object) array(
+                        'id'        => $data->id_det_post,
                         'id_post'     => $data->id_post,
                         'id_kategori' => $data->id_kategori,
                         'kategori'    => $data->nama_kategori,
@@ -514,4 +515,81 @@ class PupuhAdminController extends Controller
             ]);
         }
     }
+
+    public function listAllYadnyaNotYetOnPupuh($id_post){
+        $check = M_Post::where('tb_post.id_kategori', '!=', null)
+        ->where('tb_post.id_tag', null)
+                        // ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                        // ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_post')
+                        // ->where('tb_post.is_approved', 1)
+                        // ->where('tb_detil_post.id_tag', '=', '10')
+                        // ->where('tb_detil_post.id_parent_post', $id_post)
+                        ->orderBy('tb_post.id_post', 'desc')
+                        ->get();
+
+        foreach($check as $c){
+            $val = M_Det_Post::where('id_post', $c->id_post)
+                                ->where('id_tag', '10')
+                                // ->where('tb_post.id_kategori', '!=', null)
+                                ->where('id_parent_post', $id_post)
+                                ->first();
+            if($val == null){
+                $new_check[] = (object) array(
+                    'id_post'   => $c->id_post,
+                    'nama_post' => $c->nama_post,
+                    'gambar'    => $c->gambar,
+                );
+            }
+        }
+
+        if(isset($new_check)){
+            $arr = [
+                "data" => $new_check
+            ];
+            return response()->json($arr);
+        }else {
+            $new_check = [];
+            $arr = [
+                'data' => $new_check
+            ];
+            return response()->json($arr);
+        }
+    }
+
+    public function addYadnyaToPupuh(Request $request, $id_post){
+        $data = new M_Det_Post;
+        $data->id_post        = $request->id_pupuh;
+        $data->id_parent_post = $id_post;
+        $data->id_tag         = 10;
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
+
+    public function deleteYadnyaFromPupuh($id_post){
+        $data = M_Det_Post::where('id_det_post', $id_post)
+                            ->where('id_tag',10)
+                            ->first();
+        if($data->delete()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal dihapus'
+            ]);
+        }
+    }
+
 }

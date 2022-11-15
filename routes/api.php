@@ -216,6 +216,10 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/admin/addaudioonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@addAudioToPupuhAdmin');
     Route::post('/admin/deleteaudioonpupuhadmin/{id_post}', 'Admin\PupuhAdminController@deleteAudioFromPupuhAdmin');
     Route::post('/admin/editaudiopupuhadmin/{id_post}', 'Admin\PupuhAdminController@updateAudioPupuhAdmin');
+
+    Route::get('/admin/listyadnyanotonpupuh/{id_post}', 'Admin\PupuhAdminController@listAllYadnyaNotYetOnPupuh');
+    Route::post('/admin/addyadnyaonpupuh/{id_post}', 'Admin\PupuhAdminController@addYadnyaToPupuh');
+    Route::post('/admin/deleteyadnyaonpupuh/{id_post}', 'Admin\PupuhAdminController@deleteYadnyaFromPupuh');
 });
 
 Route::group(['as' => 'user'], function () {
@@ -285,6 +289,7 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listallpupuh','PupuhController@listAllPupuh');
     Route::get('/listpupuhterbaru','PupuhController@listPupuhTerbaru');
     Route::get('/listkategoripupuh/{id_post}','PupuhController@listKategoriPupuh');
+    Route::get('/listkategoripupuhuser/{id_post}/{id_user}','PupuhController@listKategoriPupuhUser');
     Route::get('/detailpupuh/{id_post}','PupuhController@detailPupuh');
     Route::get('/detailbaitpupuh/{id_post}','PupuhController@detailBaitPupuh');
     Route::get('/listvideopupuh/{id_pupuh}','PupuhController@listVideoPupuh');
@@ -293,8 +298,27 @@ Route::group(['as' => 'user'], function () {
     Route::post('/createpupuh','PupuhController@createPupuh');
     Route::post('/editpupuh/{id_post}', 'PupuhController@updatePupuh');
     Route::post('/deletepupuh/{id_post}', 'PupuhController@deletePupuh');
+    Route::get('/showpupuh/{id_post}','PupuhController@showPupuh');
+   
+    Route::get('/showvideopupuh/{id_post}','PupuhController@showVideoPupuh');
     Route::post('/addvideoonpupuh/{id_post}', 'PupuhController@addVideoToPupuh');
     Route::post('/deletevideoonpupuh/{id_post}', 'PupuhController@deleteVideoFromPupuh');
+    Route::post('/editvideopupuh/{id_post}', 'PupuhController@updateVideoPupuh');
+
+    Route::get('/listbaitpupuh/{id_post}', 'PupuhController@listBaitPupuhUser');
+    Route::post('/addlirikpupuh/{id_post}', 'PupuhController@addLirikPupuh');
+    Route::get('/showlirikpupuh/{id_det_post}','PupuhController@showLirikPupuh');
+    Route::post('/editlirikpupuh/{id_det_post}', 'PupuhController@updateLirikPupuh');
+    Route::post('/deletelirikpupuh/{id_post}', 'PupuhController@deleteLirikPupuh');
+
+    Route::get('/showaudiopupuh/{id_post}','PupuhController@showAudioPupuh');
+    Route::post('/addaudioonpupuh/{id_post}', 'PupuhController@addAudioToPupuh');
+    Route::post('/deleteaudioonpupuh/{id_post}', 'PupuhController@deleteAudioFromPupuh');
+    Route::post('/editaudiopupuh/{id_post}', 'PupuhController@updateAudioPupuh');
+
+    Route::get('/listyadnyanotonpupuh/{id_post}', 'PupuhController@listAllYadnyaNotYetOnPupuh');
+    Route::post('/addyadnyaonpupuh/{id_post}', 'PupuhController@addYadnyaToPupuh');
+    Route::post('/deleteyadnyaonpupuh/{id_post}', 'PupuhController@deleteYadnyaFromPupuh');
 
     #Lagu Anak
     Route::get('/listalllaguanak','LaguAnakController@listAllLaguAnak');

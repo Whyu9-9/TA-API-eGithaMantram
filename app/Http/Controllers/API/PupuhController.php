@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\M_Kategori;
 use App\M_Post;
@@ -69,6 +70,40 @@ class PupuhController extends Controller
     {
         $datas = M_Tag::where('tb_detil_post.id_post', $id_pupuh)
                                 ->where('tb_detil_post.id_tag', '10')
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',
+                                        'tb_tag.nama_tag')
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+                                foreach ($datas as $data) {
+                                    $new_yadnya[]=(object) array(
+                                        'id_post'     => $data->id_parent_post,
+                                        'id_kategori' => $data->id_kategori,
+                                        'kategori'    => $data->nama_kategori,
+                                        'nama_post'   => $data->nama_post,
+                                        'nama_tag'   => $data->nama_tag,
+                                        'gambar'      => $data->gambar,
+                                    );
+                                }
+                        
+                                if(isset($new_yadnya)){
+                                    return response()->json($new_yadnya);
+                                }else {
+                                    $new_yadnya = [];
+                                    return response()->json($new_yadnya);
+                                }
+    }
+
+    public function listKategoriPupuhUser($id_pupuh, $id_user)
+    {
+        $datas = M_Tag::where('tb_detil_post.id_post', $id_pupuh)
+                                ->where('tb_detil_post.id_tag', '10')
+                                ->where('tb_post.id_user', '=', $id_user)
                                 ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
                                 ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
                                 ->select('tb_post.nama_post', 
@@ -295,6 +330,21 @@ class PupuhController extends Controller
         }
     }
 
+    public function showPupuh($id_post)
+    {
+        $kategori_post = M_Post::where('tb_post.id_post',$id_post)
+                            ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                            ->select('tb_post.id_post',
+                                    'tb_post.nama_post',
+                                    'tb_post.gambar',
+                                    'tb_post.deskripsi',)
+                            ->first();
+        $kategori_post['deskripsi'] = filter_var($kategori_post->deskripsi, FILTER_SANITIZE_STRING);
+        $kategori_post['video'] = 'https://youtu.be/'.$kategori_post->video;
+
+        return response()->json($kategori_post);
+    }
+
     public function deletePupuh($id_post)
     {
         $datas = M_Det_Post::where('id_parent_post',$id_post)->first();
@@ -313,9 +363,10 @@ class PupuhController extends Controller
         }
     }
 
-    public function listBaitPupuh($id_post)
+    public function listBaitPupuhUser($id_post)
     {
         $det_pros = M_Det_Pupuh::where('pupuh_id', $id_post)->orderBy('urutan_bait', 'ASC')->get();
+        if($det_pros->count() > 0) {
         foreach ($det_pros as $d_pros) {
             $new_pros[] = (object) array(
                 'id_lirik_pupuh' => $d_pros->id,
@@ -323,6 +374,11 @@ class PupuhController extends Controller
                 'bait'            => Str::limit($d_pros->bait_pupuh, 30, '...'),
             );
         }
+    }else {
+        
+        $new_pros = [];
+        
+    }
         return response()->json($new_pros);
 
     }
@@ -398,6 +454,12 @@ class PupuhController extends Controller
         }
     }
 
+    public function showVideoPupuh($id_post){
+        $data = M_Video::where('id_video', $id_post)->first();
+        $data['video'] = 'https://youtu.be/'.$data->video;
+        return response()->json($data);
+    }
+
     public function addVideoToPupuh(Request $request, $id_post){
         $data = new M_Video;
         $data->id_dharmagita = $id_post;
@@ -419,8 +481,165 @@ class PupuhController extends Controller
         }
     }
 
+    public function updateVideoPupuh(Request $request, $id_post){
+        $data = M_Video::where('id_video', $id_post)->first();
+        $data->judul_video  = $request->judul_video;
+        $data->gambar_video = $request->gambar_video;
+        $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal diubah'
+            ]);
+        }
+    }
+
     public function deleteVideoFromPupuh($id_post){
         $data = M_Video::where('id_video', $id_post)
+                            ->first();
+        if($data->delete()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal dihapus'
+            ]);
+        }
+    }
+
+    public function showAudioPupuh($id_post){
+        $data = M_Audio::where('id_audio', $id_post)->first();
+        return response()->json($data);
+    }
+
+    public function addAudioToPupuh(Request $request, $id_post){
+        $data = new M_Audio;
+        $data->id_dharmagita = $id_post;
+        $data->judul_audio  = $request->judul_audio;
+        $data->gambar_audio = $request->gambar_audio;
+        $data->audio        = $request->audio;
+        $data->is_approved = 0;
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
+
+    public function updateAudioPupuh(Request $request, $id_post){
+        $data = M_Audio::where('id_audio', $id_post)->first();
+        $data->judul_audio  = $request->judul_audio;
+        $data->gambar_audio = $request->gambar_audio;
+        $data->audio        = $request->audio;
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal diubah'
+            ]);
+        }
+    }
+
+    public function deleteAudioFromPupuh($id_post){
+        $data = M_Audio::where('id_audio', $id_post)
+                            ->first();
+        if($data->delete()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal dihapus'
+            ]);
+        }
+    }
+
+    public function listAllYadnyaNotYetOnPupuh($id_post){
+        $check = M_Post::where('tb_post.id_kategori', '!=', null)
+        ->where('tb_post.id_tag', null)
+                        // ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                        // ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_post')
+                        // ->where('tb_post.is_approved', 1)
+                        // ->where('tb_detil_post.id_tag', '=', '10')
+                        // ->where('tb_detil_post.id_parent_post', $id_post)
+                        ->orderBy('tb_post.id_post', 'desc')
+                        ->get();
+
+        foreach($check as $c){
+            $val = M_Det_Post::where('id_post', $c->id_post)
+                                ->where('id_tag', '10')
+                                // ->where('tb_post.id_kategori', '!=', null)
+                                ->where('id_parent_post', $id_post)
+                                ->first();
+            if($val == null){
+                $new_check[] = (object) array(
+                    'id_post'   => $c->id_post,
+                    'nama_post' => $c->nama_post,
+                    'gambar'    => $c->gambar,
+                );
+            }
+        }
+
+        if(isset($new_check)){
+            $arr = [
+                "data" => $new_check
+            ];
+            return response()->json($arr);
+        }else {
+            $new_check = [];
+            $arr = [
+                'data' => $new_check
+            ];
+            return response()->json($arr);
+        }
+    }
+
+
+    public function addYadnyaToPupuh(Request $request, $id_post){
+        $data = new M_Det_Post;
+        $data->id_post        = $id_post;
+        $data->id_parent_post = $request->id_tabuh;
+        $data->id_tag         = 10;
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
+
+    public function deleteYadnyaFromPupuh($id_post){
+        $data = M_Det_Post::where('id_det_post', $id_post)
+                            ->where('id_tag',10)
                             ->first();
         if($data->delete()){
             return response()->json([
