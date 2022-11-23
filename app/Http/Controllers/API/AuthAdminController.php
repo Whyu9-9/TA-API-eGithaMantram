@@ -31,6 +31,7 @@ class AuthAdminController extends Controller
                 'id_admin' => $user->id_user,
                 'nama'     => $user->name,
                 'role'     => $user->role,
+                'mobile_is_logged' => $user->mobile_is_logged,
             ];
             return response()->json($data);
         }else {
@@ -58,6 +59,25 @@ class AuthAdminController extends Controller
                 'message'  => 'Logout Gagal',
             ];
             return response()->json($data);
+        }
+    }
+
+    public function register (Request $request){
+        $data              = new M_User;
+        $data->email       = $request->email;
+        $data->password       =bcrypt($request->password);
+        $data->name       = $request->name;
+        $data->role       = 3;
+        if($data ->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
         }
     }
 

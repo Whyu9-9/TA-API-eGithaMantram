@@ -235,7 +235,7 @@ class PupuhController extends Controller
     public function YadnyaPupuh($id_pupuh)
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
-                 ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar')
+                 ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar','tb_detil_post.id_det_post')
                  ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_post')
                 ->where('tb_post.is_approved', 1)
                 ->where('tb_post.id_kategori', '!=', null)
@@ -246,6 +246,7 @@ class PupuhController extends Controller
                 if($datas->count() > 0) {
                 foreach ($datas as $data) {
                     $new_kidung[]=(object) array(
+                        'id'        => $data->id_det_post,
                         'id_post'     => $data->id_post,
                         'id_kategori' => $data->id_kategori,
                         'kategori'    => $data->nama_kategori,
@@ -620,8 +621,8 @@ class PupuhController extends Controller
 
     public function addYadnyaToPupuh(Request $request, $id_post){
         $data = new M_Det_Post;
-        $data->id_post        = $id_post;
-        $data->id_parent_post = $request->id_tabuh;
+        $data->id_post        = $request->id_pupuh;
+        $data->id_parent_post = $id_post;
         $data->id_tag         = 10;
 
         if($data->save()){

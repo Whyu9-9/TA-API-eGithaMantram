@@ -223,6 +223,9 @@ Route::group(['as' => 'admin'], function () {
 });
 
 Route::group(['as' => 'user'], function () {
+    Route::post('/register','AuthAdminController@register');
+    Route::post('/login', 'AuthAdminController@login');
+    Route::post('/logout', 'AuthAdminController@logout');
     #yadnya
     Route::get('/yadnya/{nama_yadnya}','YadnyaListController@selectedCardYadnya');
     Route::get('/listyadnya','YadnyaListController@listYadnyaMaster');
