@@ -149,14 +149,17 @@ class DharmagitaController extends Controller
                     ->orWhere('tb_post.id_tag', '=', '10')
                     ->orWhere('tb_post.id_tag', '=', '11')
                     ->where('tb_post.is_approved', 1)
-                    ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.nama_post', 'tb_post.deskripsi')
+                    ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.nama_post', 'tb_post.deskripsi','tb_tag.nama_tag')
+                    ->leftJoin('tb_tag','tb_post.id_tag','=','tb_tag.id_tag')
                     ->orderBy('tb_post.id_post', 'desc')
                     ->limit(6)
                     ->get();
         foreach ($datas as $data) {
             $new_gita[]=(object) array(
                 'id_post'     => $data->id_post,
+                'id_tag'     => $data->id_tag,
                 'nama_post'   => $data->nama_post,
+                'nama_tag'   => $data->nama_tag,
                 'gambar'      => $data->gambar,
             );
         }
