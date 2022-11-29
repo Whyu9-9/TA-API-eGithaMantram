@@ -117,6 +117,29 @@ class KakawinAdminController extends Controller
         return response()->json($data);
     }
 
+    public function detailArtiKakawinAdmin($id_post)
+    {
+        $det_pros = M_Det_Kakawin::where('sekar_agung_id', $id_post)->orderBy('urutan_bait', 'ASC')->get();
+        if($det_pros->count() > 0) {
+            foreach ($det_pros as $d_pros) {
+                $new_pros[] = (object) array(
+                    'urutan'   => "Lirik ke-".$d_pros->urutan_bait,
+                    'arti'     => $d_pros->arti_sekar_agung,
+                );
+            }
+
+            $data = [
+                'data' => $new_pros,
+            ];
+        }else{
+            $data = [
+                'data' => [],
+            ];
+        }
+
+        return response()->json($data);
+    }
+
     public function listVideoKakawinAdmin($id_kakawin)
     {
         $datas = M_Video::where('tb_video.id_dharmagita',$id_kakawin)
@@ -329,6 +352,7 @@ class KakawinAdminController extends Controller
         $data = new M_Det_Kakawin;
         $data->sekar_agung_id   = $id_post;
         $data->bait_sekar_agung = $request->bait_sekar_agung;
+        $data->arti_sekar_agung = $request->arti_sekar_agung;
 
         if($getLatestUrutan){
             $data->urutan_bait = intval($getLatestUrutan->urutan_bait) + 1;
@@ -357,6 +381,7 @@ class KakawinAdminController extends Controller
     public function updateLirikKakawinAdmin(Request $request, $id_det_post){
         $data = M_Det_Kakawin::where('id', $id_det_post)->first();
         $data->bait_sekar_agung = $request->bait_sekar_agung;
+        $data->arti_sekar_agung = $request->arti_sekar_agung;
 
         if($data->save()){
             return response()->json([
@@ -393,6 +418,91 @@ class KakawinAdminController extends Controller
             ]);
         }
     }
+
+    // public function listArtiKakawinAdmin($id_post)
+    // {
+    //     $det_pros = M_Det_Kakawin::where('sekar_agung_id', $id_post)->orderBy('urutan_bait', 'ASC')->get();
+    //     foreach ($det_pros as $d_pros) {
+    //         $new_pros[] = (object) array(
+    //             'id_lirik_sekar_agung' => $d_pros->id,
+    //             'urutan'          => $d_pros->urutan_bait,
+    //             'arti'            => Str::limit($d_pros->arti_sekar_agung, 30, '...'),
+    //         );
+    //     }
+    //     return response()->json($new_pros);
+
+    // }
+
+    // public function addArtiKakawinAdmin(Request $request, $id_post){
+    //     $getLatestUrutan = M_Det_Kakawin::select('urutan_bait')->where('sekar_agung_id', $id_post)->orderBy('urutan_bait', 'DESC')->first();
+
+    //     $data = new M_Det_Kakawin;
+    //     $data->sekar_agung_id   = $id_post;
+    //     $data->arti_sekar_agung = $request->arti_sekar_agung;
+
+    //     if($getLatestUrutan){
+    //         $data->urutan_bait = intval($getLatestUrutan->urutan_bait) + 1;
+    //     }else {
+    //         $data->urutan_bait = 1;
+    //     }
+
+    //     if($data->save()){
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => 'Data berhasil ditambahkan'
+    //         ]);
+    //     }else {
+    //         return response()->json([
+    //             'status' => 401,
+    //             'message' => 'Data gagal ditambahkan'
+    //         ]);
+    //     }
+    // }
+
+    // public function showArtiKakawinAdmin($id_det_post){
+    //     $data = M_Det_Kakawin::where('id', $id_det_post)->first();
+    //     return response()->json($data);
+    // }
+
+    // public function updateArtiKakawinAdmin(Request $request, $id_det_post){
+    //     $data = M_Det_Kakawin::where('id', $id_det_post)->first();
+    //     $data->arti_sekar_agung = $request->arti_sekar_agung;
+
+    //     if($data->save()){
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => 'Data berhasil diubah'
+    //         ]);
+    //     }else {
+    //         return response()->json([
+    //             'status' => 401,
+    //             'message' => 'Data gagal diubah'
+    //         ]);
+    //     }
+    // }
+
+    // public function deleteArtiKakawinAdmin(Request $request, $id)
+    // {
+    //     $data = M_Det_Kakawin::where('id', $id)->first();
+    //     if($data->delete()){
+    //         $i = 0;
+    //         $datas = M_Det_Kakawin::where('sekar_agung_id', $request->sekar_agung_id)->orderBy('urutan_bait', 'ASC')->get();
+    //         foreach ($datas as $key) {
+    //             DB::table('tb_detail_sekar_agung')
+    //                 ->where('id', $key->id)
+    //                 ->update(['urutan_bait' => $i+=1]);
+    //         }
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => 'Data berhasil dihapus'
+    //         ]);
+    //     }else {
+    //         return response()->json([
+    //             'status' => 401,
+    //             'message' => 'Data gagal dihapus'
+    //         ]);
+    //     }
+    // }
 
     public function showVideoKakawinAdmin($id_post){
         $data = M_Video::where('id_video', $id_post)->first();

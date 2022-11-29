@@ -220,6 +220,73 @@ Route::group(['as' => 'admin'], function () {
     Route::get('/admin/listyadnyanotonpupuh/{id_post}', 'Admin\PupuhAdminController@listAllYadnyaNotYetOnPupuh');
     Route::post('/admin/addyadnyaonpupuh/{id_post}', 'Admin\PupuhAdminController@addYadnyaToPupuh');
     Route::post('/admin/deleteyadnyaonpupuh/{id_post}', 'Admin\PupuhAdminController@deleteYadnyaFromPupuh');
+
+    #laguanak
+    Route::get('/admin/listalllaguanakadmin','Admin\LaguAnakAdminController@listAllLaguAnakAdmin');
+    Route::get('/admin/listkategorilaguanakadmin/{id_post}','Admin\LaguAnakAdminController@listKategoriLaguAnakAdmin');
+    Route::get('/admin/detaillaguanakadmin/{id_post}','Admin\LaguAnakAdminController@detailLaguAnakAdmin');
+    Route::get('/admin/detailbaitlaguanakadmin/{id_post}','Admin\LaguAnakAdminController@detailBaitLaguAnakAdmin');
+    Route::get('/admin/listvideolaguanakadmin/{id_lagu_anak}','Admin\LaguAnakAdminController@listVideoLaguAnakAdmin');
+    Route::get('/admin/listaudiolaguanakadmin/{id_post}','Admin\LaguAnakAdminController@listAudioLaguAnakAdmin');
+    Route::get('/admin/yadnyalaguanakadmin/{id_lagu_anak}','Admin\LaguAnakAdminController@YadnyaLaguAnakAdmin');
+    Route::post('/admin/createlaguanakadmin','Admin\LaguAnakAdminController@createLaguAnakAdmin');
+    Route::post('/admin/editlaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@updateLaguAnakAdmin');
+    Route::post('/admin/deletelaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@deleteLaguAnakAdmin');
+    Route::get('/admin/showlaguanak/{id_post}','Admin\LaguAnakAdminController@showLaguAnak');
+
+    Route::get('/admin/showvideolaguanakadmin/{id_post}','Admin\LaguAnakAdminController@showVideoLaguAnakAdmin');
+    Route::post('/admin/addvideoonlaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@addVideoToLaguAnakAdmin');
+    Route::post('/admin/deletevideoonlaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@deleteVideoFromLaguAnakAdmin');
+    Route::post('/admin/editvideolaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@updateVideoLaguAnakAdmin');
+
+    Route::get('/admin/listbaitlaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@listBaitLaguAnakAdmin');
+    Route::post('/admin/addliriklaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@addLirikLaguAnakAdmin');
+    Route::get('/admin/showliriklaguanakadmin/{id_det_post}','Admin\LaguAnakAdminController@showLirikLaguAnakAdmin');
+    Route::post('/admin/editliriklaguanakadmin/{id_det_post}', 'Admin\LaguAnakAdminController@updateLirikLaguAnakAdmin');
+    Route::post('/admin/deleteliriklaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@deleteLirikLaguAnakAdmin');
+
+    Route::get('/admin/showaudiolaguanakadmin/{id_post}','Admin\LaguAnakAdminController@showAudioLaguAnakAdmin');
+    Route::post('/admin/addaudioonlaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@addAudioToLaguAnakAdmin');
+    Route::post('/admin/deleteaudioonlaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@deleteAudioFromLaguAnakAdmin');
+    Route::post('/admin/editaudiolaguanakadmin/{id_post}', 'Admin\LaguAnakAdminController@updateAudioLaguAnakAdmin');
+
+    Route::get('/admin/listyadnyanotonlaguanak/{id_post}', 'Admin\LaguAnakAdminController@listAllYadnyaNotYetOnLaguAnak');
+    Route::post('/admin/addyadnyaonlaguanak/{id_post}', 'Admin\LaguAnakAdminController@addYadnyaToLaguAnak');
+    Route::post('/admin/deleteyadnyaonlaguanak/{id_post}', 'Admin\LaguAnakAdminController@deleteYadnyaFromLaguAnak');
+
+    #kakawin
+    Route::get('/admin/listallkakawinadmin','Admin\KakawinController@listAllKakawinAdmin');
+    Route::get('/admin/listkategorikakawinadmin/{id_post}','Admin\KakawinAdminController@listKategoriKakawinAdmin');
+    Route::get('/admin/detailkakawinadmin/{id_post}','Admin\KakawinAdminController@detailKakawinAdmin');
+    Route::get('/admin/detailbaitkakawinadmin/{id_post}','Admin\KakawinAdminController@detailBaitKakawinAdmin');
+    Route::get('/admin/detailartikakawinadmin/{id_post}','Admin\KakawinAdminController@detailArtiKakawinAdmin');
+    Route::get('/admin/listvideokakawinadmin/{id_sekar_agung}','Admin\KakawinAdminController@listVideoKakawinAdmin');
+    Route::get('/admin/listaudiokakawinadmin/{id_post}','Admin\KakawinAdminController@listAudioKakawinAdmin');
+    Route::get('/admin/yadnyakakawinadmin/{id_sekar_agung}','Admin\KakawinAdminController@YadnyaKakawinAdmin');
+    Route::post('/admin/createkakawinadmin','Admin\KakawinAdminController@createKakawinAdmin');
+    Route::post('/admin/editkakawinadmin/{id_post}', 'Admin\KakawinAdminController@updateKakawinAdmin');
+    Route::post('/admin/deletekakawinadmin/{id_post}', 'Admin\KakawinAdminController@deleteKakawinAdmin');
+    Route::get('/admin/showkakawin/{id_post}','Admin\KakawinAdminController@showKakawin');
+
+    Route::get('/admin/showvideokakawinadmin/{id_post}','Admin\KakawinAdminController@showVideoKakawinAdmin');
+    Route::post('/admin/addvideoonkakawinadmin/{id_post}', 'Admin\KakawinAdminController@addVideoToKakawinAdmin');
+    Route::post('/admin/deletevideoonkakawinadmin/{id_post}', 'Admin\KakawinAdminController@deleteVideoFromKakawinAdmin');
+    Route::post('/admin/editvideokakawinadmin/{id_post}', 'Admin\KakawinAdminController@updateVideoKakawinAdmin');
+
+    Route::get('/admin/listbaitkakawinadmin/{id_post}', 'Admin\KakawinAdminController@listBaitKakawinAdmin');
+    Route::post('/admin/addlirikkakawinadmin/{id_post}', 'Admin\KakawinAdminController@addLirikKakawinAdmin');
+    Route::get('/admin/showlirikkakawinadmin/{id_det_post}','Admin\KakawinAdminController@showLirikKakawinAdmin');
+    Route::post('/admin/editlirikkakawinadmin/{id_det_post}', 'Admin\KakawinAdminController@updateLirikKakawinAdmin');
+    Route::post('/admin/deletelirikkakawinadmin/{id_post}', 'Admin\KakawinAdminController@deleteLirikKakawinAdmin');
+
+    Route::get('/admin/showaudiokakawinadmin/{id_post}','Admin\KakawinAdminController@showAudioKakawinAdmin');
+    Route::post('/admin/addaudioonkakawinadmin/{id_post}', 'Admin\KakawinAdminController@addAudioToKakawinAdmin');
+    Route::post('/admin/deleteaudioonkakawinadmin/{id_post}', 'Admin\KakawinAdminController@deleteAudioFromKakawinAdmin');
+    Route::post('/admin/editaudiokakawinadmin/{id_post}', 'Admin\KakawinAdminController@updateAudioKakawinAdmin');
+
+    Route::get('/admin/listyadnyanotonkakawin/{id_post}', 'Admin\KakawinAdminController@listAllYadnyaNotYetOnKakawin');
+    Route::post('/admin/addyadnyaonkakawin/{id_post}', 'Admin\KakawinAdminController@addYadnyaToKakawin');
+    Route::post('/admin/deleteyadnyaonkakawin/{id_post}', 'Admin\KakawinAdminController@deleteYadnyaFromKakawin');
 });
 
 Route::group(['as' => 'user'], function () {
