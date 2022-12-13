@@ -198,8 +198,7 @@ class DharmagitaController extends Controller
     
     public function listAllGita()
     {
-        $datas = M_Post::distinct()
-                    ->leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+        $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_parent_post')
                     ->leftJoin('tb_tag','tb_detil_post.id_tag','=','tb_tag.id_tag')
                     ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar', 'tb_detil_post.id_tag','tb_tag.nama_tag')

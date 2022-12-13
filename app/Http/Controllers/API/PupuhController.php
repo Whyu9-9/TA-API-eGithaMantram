@@ -276,6 +276,7 @@ class PupuhController extends Controller
         // $data->video       = preg_replace("#.*youtu\.be/#", "", $request->video);
         $data->deskripsi   = "<p>".$request->deskripsi."</p>";
         $data->is_approved = 0;
+        $data->id_user = $request->id_user;
         if($request->has('gambar')){
             $image = time().'.jpg';
             file_put_contents('gambarku/'.$image,base64_decode($request->gambar));

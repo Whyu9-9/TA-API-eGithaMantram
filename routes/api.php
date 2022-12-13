@@ -36,6 +36,9 @@ Route::group(['as' => 'admin'], function () {
     Route::get('/admin/listallkidungadmin', 'Admin\KidungController@listAllKidungAdmin');
     Route::get('/admin/detailkidungadmin/{id_post}', 'Admin\KidungController@detailKidungAdmin');
     Route::get('/admin/listlirikkidungadmin/{id_post}', 'Admin\KidungController@detailBaitKidungAdmin');
+    Route::get('/admin/listvideokidungadmin/{id_kidung}','Admin\KidungController@listVideoKidungAdmin');
+    Route::get('/admin/listaudiokidungadmin/{id_post}','Admin\KidungController@listAudioKidungAdmin');
+    Route::get('/admin/yadnyakidungadmin/{id_kidung}','Admin\KidungController@YadnyaKidungAdmin');
     Route::post('/admin/createkidung', 'Admin\KidungController@createKidung');
     Route::get('/admin/showkidung/{id_post}','Admin\KidungController@showKidung');
     Route::post('/admin/editkidung/{id_post}', 'Admin\KidungController@updateKidung');
@@ -46,6 +49,20 @@ Route::group(['as' => 'admin'], function () {
     Route::get('/admin/showlirikkidung/{id_det_post}','Admin\KidungController@showLirikKidung');
     Route::post('/admin/editlirikkidung/{id_det_post}', 'Admin\KidungController@updateLirikKidung');
     Route::post('/admin/deletelirikkidung/{id_det_post}', 'Admin\KidungController@deleteLirikKidung');
+
+    Route::get('/admin/showvideokidungadmin/{id_post}','Admin\KidungController@showVideoKidungAdmin');
+    Route::post('/admin/addvideoonkidungadmin/{id_post}', 'Admin\KidungController@addVideoToKidungAdmin');
+    Route::post('/admin/deletevideoonkidungadmin/{id_post}', 'Admin\KidungController@deleteVideoFromKidungkAdmin');
+    Route::post('/admin/editvideokidungadmin/{id_post}', 'Admin\KidungController@updateVideoKidungAdmin');
+
+    Route::get('/admin/showaudiokidungadmin/{id_post}','Admin\KidungController@showAudioKidungAdmin');
+    Route::post('/admin/addaudioonkidungadmin/{id_post}', 'Admin\KidungController@addAudioToKidungAdmin');
+    Route::post('/admin/deleteaudioonkidungadmin/{id_post}', 'Admin\KidungController@deleteAudioFromKidungAdmin');
+    Route::post('/admin/editaudiokidungadmin/{id_post}', 'Admin\KidungController@updateAudioKidungAdmin');
+
+    Route::get('/admin/listyadnyanotonkidung/{id_post}', 'Admin\KidungController@listAllYadnyaNotYetOnKidung');
+    Route::post('/admin/addyadnyaonkidung/{id_post}', 'Admin\KidungController@addYadnyaToKidung');
+    Route::post('/admin/deleteyadnyaonkidung/{id_post}', 'Admin\KidungController@deleteYadnyaFromKidung');
 
     #gamelan
     Route::get('/admin/listallgamelanadmin', 'Admin\GamelanController@listAllGamelanAdmin');
