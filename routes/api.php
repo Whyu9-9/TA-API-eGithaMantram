@@ -52,7 +52,7 @@ Route::group(['as' => 'admin'], function () {
 
     Route::get('/admin/showvideokidungadmin/{id_post}','Admin\KidungController@showVideoKidungAdmin');
     Route::post('/admin/addvideoonkidungadmin/{id_post}', 'Admin\KidungController@addVideoToKidungAdmin');
-    Route::post('/admin/deletevideoonkidungadmin/{id_post}', 'Admin\KidungController@deleteVideoFromKidungkAdmin');
+    Route::post('/admin/deletevideoonkidungadmin/{id_post}', 'Admin\KidungController@deleteVideoFromKidungAdmin');
     Route::post('/admin/editvideokidungadmin/{id_post}', 'Admin\KidungController@updateVideoKidungAdmin');
 
     Route::get('/admin/showaudiokidungadmin/{id_post}','Admin\KidungController@showAudioKidungAdmin');
@@ -272,7 +272,7 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/admin/deleteyadnyaonlaguanak/{id_post}', 'Admin\LaguAnakAdminController@deleteYadnyaFromLaguAnak');
 
     #kakawin
-    Route::get('/admin/listallkakawinadmin','Admin\KakawinController@listAllKakawinAdmin');
+    Route::get('/admin/listallkakawinadmin','Admin\KakawinAdminController@listAllKakawinAdmin');
     Route::get('/admin/listkategorikakawinadmin/{id_post}','Admin\KakawinAdminController@listKategoriKakawinAdmin');
     Route::get('/admin/detailkakawinadmin/{id_post}','Admin\KakawinAdminController@detailKakawinAdmin');
     Route::get('/admin/detailbaitkakawinadmin/{id_post}','Admin\KakawinAdminController@detailBaitKakawinAdmin');

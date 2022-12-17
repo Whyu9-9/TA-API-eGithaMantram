@@ -9,6 +9,12 @@ use App\M_Kategori;
 use App\M_Post;
 use App\M_Det_Kidung;
 use DB;
+use App\M_Det_Post;
+use App\M_Tag;
+use App\M_Det_Dharmagita;
+use App\M_Video;
+use App\M_Audio;
+
 
 class KidungController extends Controller
 {

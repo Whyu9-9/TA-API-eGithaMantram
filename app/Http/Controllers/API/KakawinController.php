@@ -99,6 +99,7 @@ class KakawinController extends Controller
                 $new_pros[] = (object) array(
                     'urutan'   => "Lirik ke-".$d_pros->urutan_bait,
                     'bait'     => $d_pros->bait_sekar_agung,
+                    'arti'     => $d_pros->arti_sekar_agung,
                 );
             }
 
