@@ -68,6 +68,30 @@ class AuthAdminController extends Controller
         $data->password       =bcrypt($request->password);
         $data->name       = $request->name;
         $data->role       = 3;
+        $data->is_approved  = 1;
+        if($data ->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
+
+    public function registerAhli (Request $request){
+        $data              = new M_User;
+        $data->email       = $request->email;
+        $data->password       =bcrypt($request->password);
+        $data->name       = $request->name;
+        $data->role       = 2;
+        $data->is_approved  = 0;
+        // $fileAhli = time().'.pdf';
+        // file_put_contents('fileAhli/'.$fileAhli,base64_decode($request->file));
+        $data->file  = $request->file;
         if($data ->save()){
             return response()->json([
                 'status' => 200,

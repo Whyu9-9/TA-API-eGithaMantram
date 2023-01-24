@@ -208,4 +208,78 @@ class LaguAnakController extends Controller
                 return response()->json($arr);
     }
 
+    public function listKategoriLaguAnakUser($id_lagu_anak, $id_user)
+    {
+        $datas = M_Tag::where('tb_detil_post.id_post', $id_lagu_anak)
+                                ->where('tb_detil_post.id_tag', '9')
+                                ->where('tb_post.id_user', '=', $id_user)
+                                ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
+                                ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
+                                ->select('tb_post.nama_post', 
+                                        'tb_post.gambar',
+                                        'tb_detil_post.id_post', 
+                                        'tb_detil_post.id_parent_post', 
+                                        'tb_detil_post.id_tag',
+                                        'tb_tag.nama_tag')
+                                ->orderBy('tb_detil_post.posisi', 'ASC')
+                                ->get();
+                                foreach ($datas as $data) {
+                                    $new_yadnya[]=(object) array(
+                                        'id_post'     => $data->id_parent_post,
+                                        'id_kategori' => $data->id_kategori,
+                                        'kategori'    => $data->nama_kategori,
+                                        'nama_post'   => $data->nama_post,
+                                        'nama_tag'   => $data->nama_tag,
+                                        'gambar'      => $data->gambar,
+                                    );
+                                }
+                        
+                                if(isset($new_yadnya)){
+                                    return response()->json($new_yadnya);
+                                }else {
+                                    $new_yadnya = [];
+                                    return response()->json($new_yadnya);
+                                }
+    }
+
+    public function createLaguAnak(Request $request)
+    {
+    
+        $data              = new M_Post;
+        $data->nama_post   = $request->nama_post;
+        $data->id_tag      = null;
+        $data->id_kategori = null;
+        // $data->video       = preg_replace("#.*youtu\.be/#", "", $request->video);
+        $data->deskripsi   = "<p>".$request->deskripsi."</p>";
+        $data->is_approved = 0;
+        $data->id_user = $request->id_user;
+        if($request->has('gambar')){
+            $image = time().'.jpg';
+            file_put_contents('gambarku/'.$image,base64_decode($request->gambar));
+            $data->gambar = $image;
+        }else {
+            $data->gambar = '1604034202_note fix.png';
+        }
+        $data -> save();
+
+        $datas = new M_Det_Post;
+        $datas->id_tag      = 9;
+        $datas->id_post        = $request->id_lagu_anak;
+        $datas->id_parent_post = $data->id_post;
+        $datas->id_root_post = $request->id_lagu_anak;
+    
+        if($datas ->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
+
+
 }

@@ -201,7 +201,11 @@ class DharmagitaController extends Controller
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_parent_post')
                     ->leftJoin('tb_tag','tb_detil_post.id_tag','=','tb_tag.id_tag')
-                    ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar', 'tb_detil_post.id_tag','tb_tag.nama_tag')
+                    ->leftJoin('tb_detail_kidung','tb_post.id_post','=','tb_detail_kidung.kidung_id')
+                    ->leftJoin('tb_detail_pupuh','tb_post.id_post','=','tb_detail_pupuh.pupuh_id')
+                    ->leftJoin('tb_detail_sekar_agung','tb_post.id_post','=','tb_detail_sekar_agung.sekar_agung_id')
+                    ->leftJoin('tb_detail_lagu_anak','tb_post.id_post','=','tb_detail_lagu_anak.lagu_anak_id')
+                    ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar', 'tb_detil_post.id_tag','tb_tag.nama_tag', 'tb_detail_kidung.bait_kidung', 'tb_detail_pupuh.bait_pupuh', 'tb_detail_sekar_agung.bait_sekar_agung','tb_detail_lagu_anak.bait_lagu')
                     ->where('tb_post.is_approved', 1)
                     ->where('tb_detil_post.id_tag', '=', '9')
                     ->orWhere('tb_detil_post.id_tag', '=', '4')
@@ -218,6 +222,10 @@ class DharmagitaController extends Controller
                 'nama_post'   => $data->nama_post,
                 'nama_tag'   => $data->nama_tag,
                 'gambar'      => $data->gambar,
+                'bait_kidung' => $data->bait_kidung,
+                'bait_pupuh' => $data->bait_pupuh,
+                'bait_sekar_agung' => $data->bait_sekar_agung,
+                'bait_lagu' => $data->bait_lagu,
             );
         }
 

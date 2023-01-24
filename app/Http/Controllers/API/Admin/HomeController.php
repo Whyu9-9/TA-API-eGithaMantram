@@ -8,6 +8,7 @@ use App\M_Kategori;
 use App\M_Post;
 use App\M_Det_Post;
 use App\M_Tag;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -29,6 +30,95 @@ class HomeController extends Controller
         return response()->json($all_yadnya);
     }
 
+    public function listNoApprovalDharmagita()
+    {
+        $data = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                ->select('tb_post.id_post', 'tb_post.nama_post')
+                ->where('tb_post.is_approved', '=', '0')
+                ->orderBy('tb_post.id_post', 'desc')
+                ->get();
+
+       
+            $jumlah = M_Post::where('tb_post.is_approved', '=', '0')
+                            ->count();
+            $all_yadnya =(object) array(
+                // 'id_post'   => $jumlah->id_post,
+                // 'nama_post' => $data->nama_post,
+                'jumlah'        => $jumlah,
+            );
+       
+
+        return response()->json($all_yadnya);
+    }
+
+    public function listApprovalDharmagita()
+    {
+        $data = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                ->select('tb_post.id_post', 'tb_post.nama_post')
+                ->where('tb_post.is_approved', '=', '1')
+                ->where('tb_post.id_tag', '=', null)
+                ->where('tb_post.id_kategori', '=', null)
+                ->orderBy('tb_post.id_post', 'desc')
+                ->get();
+
+        // foreach($data as $d){
+            $jumlah = M_Post::where('tb_post.is_approved', '=', '1')
+                             ->where('tb_post.id_tag', '=', null)
+                            ->where('tb_post.id_kategori', '=', null)
+                            ->count();
+            $all_yadnya=(object) array(
+                // 'id_post'   => $d->id_post,
+                // 'nama_post' => $d->nama_post,
+                'jumlah'        => $jumlah,
+            );
+        // }
+
+        return response()->json($all_yadnya);
+    }
+
+    public function listNoApprovalAhli()
+    {
+        $data = User::select('users.email', 'users.name')
+                ->where('users.is_approved', '=', '0')
+                ->where('users.role', '=', '2')
+                ->orderBy('users.id_user', 'desc')
+                ->get();
+
+        // foreach($data as $d){
+            $jumlah = User::where('users.is_approved', '=', '0')
+                            ->where('users.role', '=', '2')
+                            ->count();
+            $all_yadnya=(object) array(
+                // 'id_post'   => $d->id_post,
+                // 'nama_post' => $d->nama_post,
+                'jumlah'        => $jumlah,
+            );
+        // }
+
+        return response()->json($all_yadnya);
+    }
+
+    public function listApprovalAhli()
+    {
+        $data = User::select('users.email', 'users.name')
+                ->where('users.is_approved', '=', '1')
+                ->orderBy('users.id_user', 'desc')
+                ->get();
+
+        // foreach($data as $d){
+            $jumlah = User::where('users.is_approved', '=', '1')
+                            ->count();
+            $all_yadnya=(object) array(
+                // 'id_post'   => $d->id_post,
+                // 'nama_post' => $d->nama_post,
+                'jumlah'        => $jumlah,
+            );
+        // }
+
+        return response()->json($all_yadnya);
+    }
+
+   
     public function listDharmagitaMaster()
     {
         $data = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')

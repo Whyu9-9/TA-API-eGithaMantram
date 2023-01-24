@@ -197,4 +197,65 @@ class KidungListController extends Controller
                     }
                     return response()->json($arr);
     }
+
+    public function listKategoriKidungUser($id_user)
+    {
+        $datas =  M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
+                        ->leftJoin('tb_tag','tb_post.id_tag','=','tb_tag.id_tag')
+                        ->select('tb_post.id_post','tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.deskripsi','tb_tag.nama_tag')
+                        // ->where('tb_post.is_approved', 1)
+                        ->where('tb_post.id_user', '=', $id_user)
+                        ->where('tb_post.id_tag', '=', '4')->orderBy('tb_post.id_post', 'desc')
+                        ->get();
+                                foreach ($datas as $data) {
+                                    $new_yadnya[]=(object) array(
+                                        'id_post'     => $data->id_post,
+                                        'id_kategori' => $data->id_kategori,
+                                        'kategori'    => $data->nama_kategori,
+                                        'nama_post'   => $data->nama_post,
+                                        'nama_tag'   => $data->nama_tag,
+                                        'gambar'      => $data->gambar,
+                                    );
+                                }
+                        
+                                if(isset($new_yadnya)){
+                                    return response()->json($new_yadnya);
+                                }else {
+                                    $new_yadnya = [];
+                                    return response()->json($new_yadnya);
+                                }
+    }
+
+    public function createKidung(Request $request)
+    {
+        $kat = M_Kategori::where('nama_kategori',$request->kategori)->first();
+
+        $data              = new M_Post;
+        $data->nama_post   = $request->nama_post;
+        $data->id_tag      = 4;
+        $data->id_kategori = $kat->id_kategori;
+        // $data->video       = preg_replace("#.*youtu\.be/#", "", $request->video);
+        $data->deskripsi   = "<p>".$request->deskripsi."</p>";
+        $data->is_approved = 1;
+        $data->id_user = $request->id_user;
+        if($request->has('gambar')){
+            $image = time().'.jpg';
+            file_put_contents('gambarku/'.$image,base64_decode($request->gambar));
+            $data->gambar = $image;
+        }else {
+            $data->gambar = '1604034202_note fix.png';
+        }
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
+            ]);
+        }
+    }
 }

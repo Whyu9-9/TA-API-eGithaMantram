@@ -17,6 +17,9 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/login', 'AuthAdminController@login');
     Route::post('/logout', 'AuthAdminController@logout');
 
+    #user
+    Route::get('/admin/listuser', 'Admin\AdminController@listUser');
+
     #admin
     Route::get('/admin/listadmin', 'Admin\AdminController@index');
     Route::get('/admin/detailadmin/{id_user}', 'Admin\AdminController@getDetailAdmin');
@@ -187,6 +190,10 @@ Route::group(['as' => 'admin'], function () {
     #yadnyaHome
     Route::get('/admin/listyadnya','Admin\HomeController@listYadnyaMaster');
     Route::get('/admin/listdharmagita','Admin\HomeController@listDharmagitaMaster');
+    Route::get('/admin/listnoapprovaldharmagita','Admin\HomeController@listNoApprovalDharmagita');
+    Route::get('/admin/listnoapprovalahli','Admin\HomeController@listNoApprovalAhli');
+    Route::get('/admin/listapprovaldharmagita','Admin\HomeController@listApprovalDharmagita');
+    Route::get('/admin/listapprovalahli','Admin\HomeController@listNoApprovalAhli');
     Route::get('/admin/yadnya/{nama_yadnya}','Admin\HomeController@selectedHomeYadnya');
     Route::get('/admin/dharmagita/{id_post}','Admin\HomeController@selectedHomeDharmagita');
 
@@ -308,6 +315,7 @@ Route::group(['as' => 'admin'], function () {
 
 Route::group(['as' => 'user'], function () {
     Route::post('/register','AuthAdminController@register');
+    Route::post('/registerahli','AuthAdminController@registerAhli');
     Route::post('/login', 'AuthAdminController@login');
     Route::post('/logout', 'AuthAdminController@logout');
     #yadnya
@@ -331,6 +339,8 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listvideokidung/{id_kidung}','KidungListController@listVideoKidung');
     Route::get('/listaudiokidung/{id_post}','KidungListController@listAudioKidung');
     Route::get('/yadnyakidung/{id_post}','KidungListController@YadnyaKidung');
+    Route::get('/listkategorikidunguser/{id_user}','KidungListController@listKategoriKidungUser');
+    Route::post('/createkidung','KidungListController@createKidung');
 
     #mantram
     Route::get('/listmantramterbaru','MantramListController@listMantramTerbaru');
@@ -415,6 +425,8 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listvideolaguanak/{id_lagu_anak}','LaguAnakController@listVideoLaguAnak');
     Route::get('/listaudiolaguanak/{id_post}','LaguAnakController@listAudioLaguAnak');
     Route::get('/yadnyalaguanak/{id_lagu_anak}','LaguAnakController@YadnyaLaguAnak');
+    Route::get('/listkategorilaguanakuser/{id_post}/{id_user}','LaguAnakController@listKategoriLaguAnakUser');
+    Route::post('/createlaguanak','LaguAnakController@createLaguAnak');
 
     #Kakawin
     Route::get('/listallkakawin','KakawinController@listAllKakawin');
@@ -424,4 +436,9 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listvideokakawin/{id_kakawin}','KakawinController@listVideoKakawin');
     Route::get('/listaudiokakawin/{id_post}','KakawinController@listAudioKakawin');
     Route::get('/yadnyakakawin/{id_kakawin}','KakawinController@YadnyaKakawin');
+    Route::get('/listkategorikakawinuser/{id_post}/{id_user}','KakawinController@listKategoriKakawinUser');
+    Route::post('/createkakawin','KakawinController@createKakawin');
+    Route::post('/editkakawin/{id_post}', 'KakawinController@updateKakawin');
+    Route::post('/deletekakawin/{id_post}', 'KakawinController@deleteKakawin');
+    Route::get('/showkakawin/{id_post}','KakawinController@showKakawin');
 });

@@ -10,7 +10,17 @@ use Hash;
 class AdminController extends Controller
 {
     public function index(){
-        $data = M_User::select('id_user','name','email')->get();
+        $data = M_User::select('id_user','name','email')
+        ->where('role', '!=', 3)
+        ->get();
+
+        return response()->json($data);
+    }
+
+    public function listUser(){
+        $data = M_User::select('id_user','name','email')
+        ->where('role', '=', 3)
+        ->get();
 
         return response()->json($data);
     }
@@ -42,6 +52,8 @@ class AdminController extends Controller
 
         return response()->json($data);
     }
+
+
 
     public function editAdmin(Request $request, $id_user){
         $data           = M_User::where('id_user',$id_user)->first();
