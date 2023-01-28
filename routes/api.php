@@ -26,6 +26,9 @@ Route::group(['as' => 'admin'], function () {
     Route::post('/admin/createadmin', 'Admin\AdminController@createAdmin');
     Route::post('/admin/editadmin/{id_user}', 'Admin\AdminController@editAdmin');
     Route::post('/admin/deleteadmin/{id_user}', 'Admin\AdminController@deleteAdmin');
+    Route::get('/admin/listnotapprovedahli', 'Admin\AdminController@listNotApprovedAhli');
+    Route::get('/admin/detailneedapprovalahli/{id_user}', 'Admin\AdminController@detailAhliNeedApprovalAdmin');
+    Route::post('/admin/approveahli/{id_user}', 'Admin\AdminController@approveAhli');
 
     #tabuh
     Route::get('/admin/listalltabuhadmin', 'Admin\TabuhController@listAllTabuhAdmin');
@@ -318,6 +321,7 @@ Route::group(['as' => 'user'], function () {
     Route::post('/registerahli','AuthAdminController@registerAhli');
     Route::post('/login', 'AuthAdminController@login');
     Route::post('/logout', 'AuthAdminController@logout');
+
     #yadnya
     Route::get('/yadnya/{nama_yadnya}','YadnyaListController@selectedCardYadnya');
     Route::get('/listyadnya','YadnyaListController@listYadnyaMaster');
@@ -381,6 +385,15 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listvideo/{id_post}','DharmagitaController@listVideo');
     Route::get('/listaudio/{id_post}','DharmagitaController@listAudio');
     Route::get('/listallgita','DharmagitaController@listAllGita');
+    
+    Route::get('/listnotapproveddharmagita','DharmagitaController@listNotApprovedDharmagita');
+    Route::get('/listnotapprovedvideodharmagita','DharmagitaController@listNotApprovedVideoDharmagita');
+    Route::get('/listnotapprovedaudiodharmagita','DharmagitaController@listNotApprovedAudioDharmagita');
+    Route::get('/listnoapprovalvideo','DharmagitaController@listNoApprovalVideo');
+    Route::get('/listnoapprovalaudio','DharmagitaController@listNoApprovalAudio');
+    Route::post('/approvedharmagita/{id_post}', 'DharmagitaController@approveDharmagita');
+    Route::post('/approvevideodharmagita/{id_video}', 'DharmagitaController@approveVideoDharmagita');
+    Route::post('/approveaudiodharmagita/{id_audio}', 'DharmagitaController@approveAudioDharmagita');
 
     #Pupuh
     Route::get('/listallpupuh','PupuhController@listAllPupuh');

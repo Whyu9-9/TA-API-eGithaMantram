@@ -95,4 +95,52 @@ class AdminController extends Controller
             ]);
         }
     }
+
+    public function listNotApprovedAhli()
+    {
+        $datas = $data = M_User::select('id_user','name','email')
+                        ->where('role', '=', 2)
+                        ->where('users.is_approved', 0)
+                        ->orderBy('users.id_user', 'desc')
+                        ->get();
+
+        if(isset($data)){
+            return response()->json($data);
+        }else {
+            $data = [];
+            return response()->json($data);
+        }
+    }
+
+    public function detailAhliNeedApprovalAdmin($id_user)
+    {
+        $data = M_User::where('id_user',$id_user)
+                    ->select('id_user','name','email', 'role', 'file')
+                    ->first();
+
+        return response()->json($data);
+    }
+
+    public function approveAhli(Request $request, $id_user)
+    {
+        $data = M_User::where('id_user',$id_user)->first();
+
+        if ($request->stats == 'yes'){
+            $data->is_approved = 1;
+        }else{
+            $data->is_approved = 2;
+        }
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal diubah'
+            ]);
+        }
+    }
 }
