@@ -46,6 +46,7 @@ class LaguAnakController extends Controller
     {
         $datas = M_Tag::where('tb_detil_post.id_root_post', $id_lagu_anak)
                                 ->where('tb_detil_post.id_tag', '9')
+                                ->where('tb_post.is_approved', 1)
                                 ->leftJoin('tb_detil_post','tb_tag.id_tag','=','tb_detil_post.id_tag')
                                 ->leftJoin('tb_post','tb_detil_post.id_parent_post','=','tb_post.id_post')
                                 ->select('tb_post.nama_post', 
@@ -100,6 +101,7 @@ class LaguAnakController extends Controller
                 $new_pros[] = (object) array(
                     'urutan'   => "Lirik ke-".$d_pros->urutan_bait,
                     'bait'     => $d_pros->bait_lagu,
+                    'arti'     => $d_pros->arti_lagu,
                 );
             }
 
@@ -123,6 +125,7 @@ class LaguAnakController extends Controller
                                     'tb_video.judul_video',
                                     'tb_video.gambar_video',
                                     'tb_video.video')
+                                    ->where('tb_video.is_approved_video', 1)
                             ->get();
                             if($datas->count() > 0) {
                             foreach ($datas as $data) {
@@ -153,6 +156,7 @@ class LaguAnakController extends Controller
                                     'tb_audio.judul_audio',
                                     'tb_audio.gambar_audio',
                                     'tb_audio.audio')
+                                    ->where('tb_audio.is_approved_audio', 1)
                             ->get();
                             if($datas->count() > 0) {
                             foreach ($datas as $data) {

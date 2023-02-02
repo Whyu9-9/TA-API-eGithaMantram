@@ -395,6 +395,9 @@ Route::group(['as' => 'user'], function () {
     Route::post('/approvevideodharmagita/{id_video}', 'DharmagitaController@approveVideoDharmagita');
     Route::post('/approveaudiodharmagita/{id_audio}', 'DharmagitaController@approveAudioDharmagita');
 
+    Route::get('/detailvideodharmagita/{id_video}','DharmagitaController@detailVideoDharmagita');
+    Route::get('/detailaudiodharmagita/{id_audio}','DharmagitaController@detailAudioDharmagita');
+
     #Pupuh
     Route::get('/listallpupuh','PupuhController@listAllPupuh');
     Route::get('/listpupuhterbaru','PupuhController@listPupuhTerbaru');
@@ -445,6 +448,7 @@ Route::group(['as' => 'user'], function () {
     Route::get('/listallkakawin','KakawinController@listAllKakawin');
     Route::get('/detailkakawin/{id_post}','KakawinController@detailKakawin');
     Route::get('/detailbaitkakawin/{id_post}','KakawinController@detailBaitKakawin');
+    Route::get('/detailartikakawin/{id_post}','KakawinController@detailArtiKakawin');
     Route::get('/listkategorikakawin/{id_post}','KakawinController@listKategoriKakawin');
     Route::get('/listvideokakawin/{id_kakawin}','KakawinController@listVideoKakawin');
     Route::get('/listaudiokakawin/{id_post}','KakawinController@listAudioKakawin');

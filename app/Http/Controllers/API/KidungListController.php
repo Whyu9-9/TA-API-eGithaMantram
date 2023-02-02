@@ -19,7 +19,7 @@ class KidungListController extends Controller
     {
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->select('tb_post.id_post', 'tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post')
-                    // ->where('tb_post.is_approved', 1)
+                    ->where('tb_post.is_approved', 1)
                     ->where('tb_post.id_tag', '=', '4')->orderBy('tb_post.id_post', 'desc')
                     ->limit(6)
                     ->get();
@@ -43,7 +43,7 @@ class KidungListController extends Controller
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->leftJoin('tb_tag','tb_post.id_tag','=','tb_tag.id_tag')
                     ->select('tb_post.id_post','tb_post.gambar' ,'tb_post.id_tag' , 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.deskripsi','tb_tag.nama_tag')
-                    // ->where('tb_post.is_approved', 1)
+                    ->where('tb_post.is_approved', 1)
                     ->where('tb_post.id_tag', '=', '4')->orderBy('tb_post.id_post', 'desc')
                     ->get();
 
@@ -113,6 +113,7 @@ class KidungListController extends Controller
                                     'tb_video.judul_video',
                                     'tb_video.gambar_video',
                                     'tb_video.video')
+                                    ->where('tb_video.is_approved_video', 1)
                             ->get();
                             if($datas->count() > 0) {
                             foreach ($datas as $data) {
@@ -143,6 +144,7 @@ class KidungListController extends Controller
                                     'tb_audio.judul_audio',
                                     'tb_audio.gambar_audio',
                                     'tb_audio.audio')
+                                    ->where('tb_audio.is_approved_audio', 1)
                             ->get();
                             if($datas->count() > 0) {
                             foreach ($datas as $data) {

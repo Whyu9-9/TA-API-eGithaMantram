@@ -102,6 +102,7 @@ class KakawinAdminController extends Controller
                 $new_pros[] = (object) array(
                     'urutan'   => "Lirik ke-".$d_pros->urutan_bait,
                     'bait'     => $d_pros->bait_sekar_agung,
+                    'arti'     => $d_pros->arti_sekar_agung,
                 );
             }
 
@@ -514,7 +515,9 @@ class KakawinAdminController extends Controller
         $data = new M_Video;
         $data->id_dharmagita = $id_post;
         $data->judul_video  = $request->judul_video;
-        $data->gambar_video = $request->gambar_video;
+        $image = time().'.jpg';
+        file_put_contents('gambarku/'.$image,base64_decode($request->gambar_video));
+        $data->gambar_video = $image;
         $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
         $data->is_approved = 0;
 
@@ -534,7 +537,9 @@ class KakawinAdminController extends Controller
     public function updateVideoKakawinAdmin(Request $request, $id_post){
         $data = M_Video::where('id_video', $id_post)->first();
         $data->judul_video  = $request->judul_video;
-        $data->gambar_video = $request->gambar_video;
+        $image = time().'.jpg';
+        file_put_contents('gambarku/'.$image,base64_decode($request->gambar_video));
+        $data->gambar_video = $image;
         $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
 
         if($data->save()){
@@ -575,7 +580,9 @@ class KakawinAdminController extends Controller
         $data = new M_Audio;
         $data->id_dharmagita = $id_post;
         $data->judul_audio  = $request->judul_audio;
-        $data->gambar_audio = $request->gambar_audio;
+        $image = time().'.jpg';
+        file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
+        $data->gambar_audio = $image;
         $data->audio        = $request->audio;
         $data->is_approved = 0;
 
@@ -595,7 +602,9 @@ class KakawinAdminController extends Controller
     public function updateAudioKakawinAdmin(Request $request, $id_post){
         $data = M_Audio::where('id_audio', $id_post)->first();
         $data->judul_audio  = $request->judul_audio;
-        $data->gambar_audio = $request->gambar_audio;
+        $image = time().'.jpg';
+        file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
+        $data->gambar_audio = $image;
         $data->audio        = $request->audio;
 
         if($data->save()){

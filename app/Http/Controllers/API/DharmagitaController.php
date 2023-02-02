@@ -229,7 +229,13 @@ class DharmagitaController extends Controller
             );
         }
 
-        return response()->json($yadnya);
+        // return response()->json($yadnya);
+        if(isset($yadnya)){
+            return response()->json($yadnya);
+        }else {
+            $yadnya = [];
+            return response()->json($yadnya);
+        }
     }
 
     public function listNotApprovedDharmagita()
@@ -299,7 +305,7 @@ class DharmagitaController extends Controller
     public function listNotApprovedAudioDharmagita()
     {
         $datas = M_Audio::leftJoin('tb_post','tb_audio.id_dharmagita','=','tb_post.id_post')
-                ->leftJoin('tb_detil_post','tb_audio.id_dharmagita','=','tb_detil_post.id_post')
+                ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_post')
                 ->leftJoin('tb_tag','tb_detil_post.id_tag','=','tb_tag.id_tag')
                 ->select('tb_audio.id_audio', 'tb_audio.id_dharmagita' , 'tb_audio.judul_audio', 'tb_audio.gambar_audio', 'tb_audio.audio', 'tb_audio.is_approved_audio','tb_post.nama_post','tb_detil_post.id_tag','tb_tag.nama_tag', 'tb_post.is_approved')
                 ->where('tb_audio.is_approved_audio', 0)
@@ -452,5 +458,41 @@ class DharmagitaController extends Controller
        
 
         return response()->json($all_yadnya);
+    }
+
+    public function detailVideoDharmagita($id_video)
+    {
+        $kategori_post = M_Video::where('tb_video.id_video',$id_video)
+                            ->leftJoin('tb_post','tb_video.id_dharmagita','=','tb_post.id_post')
+                            // ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detail_dharmagita.dharmagita_id')
+                            ->select('tb_video.id_video', 
+                            'tb_video.id_dharmagita' , 
+                            'tb_video.judul_video', 
+                            'tb_video.gambar_video', 
+                            'tb_video.video', 
+                            'tb_video.is_approved_video',
+                            'tb_post.nama_post',)
+                            ->first();
+        // $kategori_post['deskripsi'] = filter_var($kategori_post->deskripsi, FILTER_SANITIZE_STRING);
+
+        return response()->json($kategori_post);
+    }
+
+    public function detailAudioDharmagita($id_audio)
+    {
+        $kategori_post = M_Audio::where('tb_audio.id_audio',$id_audio)
+                            ->leftJoin('tb_post','tb_audio.id_dharmagita','=','tb_post.id_post')
+                            // ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detail_dharmagita.dharmagita_id')
+                            ->select('tb_audio.id_audio', 
+                            'tb_audio.id_dharmagita' , 
+                            'tb_audio.judul_audio', 
+                            'tb_audio.gambar_audio', 
+                            'tb_audio.audio', 
+                            'tb_audio.is_approved_audio',
+                            'tb_post.nama_post',)
+                            ->first();
+        // $kategori_post['deskripsi'] = filter_var($kategori_post->deskripsi, FILTER_SANITIZE_STRING);
+
+        return response()->json($kategori_post);
     }
 }
