@@ -12,6 +12,7 @@ class AdminController extends Controller
     public function index(){
         $data = M_User::select('id_user','name','email')
         ->where('role', '!=', 3)
+        ->where('role', '!=', 1)
         ->get();
 
         return response()->json($data);

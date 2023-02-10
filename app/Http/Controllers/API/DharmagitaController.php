@@ -205,12 +205,13 @@ class DharmagitaController extends Controller
                     ->leftJoin('tb_detail_pupuh','tb_post.id_post','=','tb_detail_pupuh.pupuh_id')
                     ->leftJoin('tb_detail_sekar_agung','tb_post.id_post','=','tb_detail_sekar_agung.sekar_agung_id')
                     ->leftJoin('tb_detail_lagu_anak','tb_post.id_post','=','tb_detail_lagu_anak.lagu_anak_id')
-                    ->select('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar', 'tb_detil_post.id_tag','tb_tag.nama_tag', 'tb_detail_kidung.bait_kidung', 'tb_detail_pupuh.bait_pupuh', 'tb_detail_sekar_agung.bait_sekar_agung','tb_detail_lagu_anak.bait_lagu')
+                    ->select ('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar', 'tb_detil_post.id_tag','tb_tag.nama_tag', 'tb_detail_kidung.bait_kidung', 'tb_detail_pupuh.bait_pupuh', 'tb_detail_sekar_agung.bait_sekar_agung','tb_detail_lagu_anak.bait_lagu')
                     ->where('tb_post.is_approved', 1)
                     ->where('tb_detil_post.id_tag', '=', '9')
                     ->orWhere('tb_detil_post.id_tag', '=', '4')
                     ->orWhere('tb_detil_post.id_tag', '=', '10')
                     ->orWhere('tb_detil_post.id_tag', '=', '11')
+                    ->distinct()
                     ->orderBy('tb_post.id_post', 'desc')
                     ->get();
         foreach ($datas as $data) {

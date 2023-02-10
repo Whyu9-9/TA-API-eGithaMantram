@@ -540,7 +540,10 @@ class PupuhController extends Controller
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
         $data->gambar_audio = $image;
-        $data->audio        = $request->audio;
+        $audio = time().'.mp3';
+        file_put_contents('audioku/'.$audio,base64_decode($request->audio));
+        $data->audio = $audio;
+        // $data->audio        = $request->audio;
         $data->is_approved = 0;
 
         if($data->save()){
@@ -666,6 +669,49 @@ class PupuhController extends Controller
             return response()->json([
                 'status' => 401,
                 'message' => 'Data gagal dihapus'
+            ]);
+        }
+    }
+
+    public function uploadAudioPupuh(Request $request, $id_post){
+        $image = $request->file('part');
+        $destinationPath = 'audioku';
+        $name = $request->input('name') .'.'. $image->getClientOriginalExtension();
+        $image->move(public_path($destinationPath), $name);
+
+        $imagem = new M_Audio();
+        $imagem->animal_id = $request->input('animal_id');
+        $imagem->img_url = $name;
+        $imagem->ativo = $request->input('ativo');   
+        $imagem->save();
+
+        return response()->json($imagem);
+    }
+
+    public function addAudioToPupuhCoba(Request $request, $id_post){
+        $audio = $request->file('part');
+        $destinationPath = 'audioku';
+        $name_audio = $request->name_audio .'.'. $audio->getClientOriginalExtension();
+        $audio->move(public_path($destinationPath), $name_audio);
+
+        $data = new M_Audio;
+        $data->id_dharmagita = $id_post;
+        $data->judul_audio  = $request->judul_audio;
+        $image = time().'.jpg';
+        file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
+        $data->gambar_audio = $image;
+        $data->audio        = $name_audio;
+        $data->is_approved = 0;
+
+        if($data->save()){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ]);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Data gagal ditambahkan'
             ]);
         }
     }

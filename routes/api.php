@@ -428,6 +428,7 @@ Route::group(['as' => 'user'], function () {
     Route::post('/addaudioonpupuh/{id_post}', 'PupuhController@addAudioToPupuh');
     Route::post('/deleteaudioonpupuh/{id_post}', 'PupuhController@deleteAudioFromPupuh');
     Route::post('/editaudiopupuh/{id_post}', 'PupuhController@updateAudioPupuh');
+    Route::post('/addaudiopupuhcoba/{id_post}', 'PupuhController@addAudioToPupuhCoba');
 
     Route::get('/listyadnyanotonpupuh/{id_post}', 'PupuhController@listAllYadnyaNotYetOnPupuh');
     Route::post('/addyadnyaonpupuh/{id_post}', 'PupuhController@addYadnyaToPupuh');
