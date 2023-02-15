@@ -410,8 +410,9 @@ class LaguAnakAdminController extends Controller
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_video));
         $data->gambar_video = $image;
         // $data->gambar_video = $request->gambar_video;
-        $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
-        $data->is_approved = 0;
+        preg_match_all("#(?<=v=|v\/|vi=|vi\/|youtu.be\/)[a-zA-Z0-9_-]{11}#", $request->video, $match);
+        $data->video = implode(" ",$match[0]);
+        $data->is_approved_video = 0;
 
         if($data->save()){
             return response()->json([
@@ -432,7 +433,8 @@ class LaguAnakAdminController extends Controller
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_video));
         $data->gambar_video = $image;
-        $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
+        preg_match_all("#(?<=v=|v\/|vi=|vi\/|youtu.be\/)[a-zA-Z0-9_-]{11}#", $request->video, $match);
+        $data->video = implode(" ",$match[0]);
 
         if($data->save()){
             return response()->json([
@@ -476,7 +478,7 @@ class LaguAnakAdminController extends Controller
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
         $data->gambar_audio = $image;
         $data->audio        = $request->audio;
-        $data->is_approved = 0;
+        $data->is_approved_audio = 0;
 
         if($data->save()){
             return response()->json([

@@ -20,6 +20,7 @@ class AuthAdminController extends Controller
                 'id_admin' => $user->id_user,
                 'nama'     => $user->name,
                 'role'     => $user->role,
+                'mobile_is_logged' => $user->mobile_is_logged,
             ];
             return response()->json($data);
         } else if($user && $request->password == $user->password){

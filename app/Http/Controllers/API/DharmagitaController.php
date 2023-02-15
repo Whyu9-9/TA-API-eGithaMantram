@@ -197,7 +197,7 @@ class DharmagitaController extends Controller
     }
     
     public function listAllGita()
-    {
+    {   
         $datas = M_Post::leftJoin('tb_kategori','tb_post.id_kategori','=','tb_kategori.id_kategori')
                     ->leftJoin('tb_detil_post','tb_post.id_post','=','tb_detil_post.id_parent_post')
                     ->leftJoin('tb_tag','tb_detil_post.id_tag','=','tb_tag.id_tag')
@@ -205,16 +205,49 @@ class DharmagitaController extends Controller
                     ->leftJoin('tb_detail_pupuh','tb_post.id_post','=','tb_detail_pupuh.pupuh_id')
                     ->leftJoin('tb_detail_sekar_agung','tb_post.id_post','=','tb_detail_sekar_agung.sekar_agung_id')
                     ->leftJoin('tb_detail_lagu_anak','tb_post.id_post','=','tb_detail_lagu_anak.lagu_anak_id')
-                    ->select ('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 'tb_post.nama_post', 'tb_post.gambar', 'tb_detil_post.id_tag','tb_tag.nama_tag', 'tb_detail_kidung.bait_kidung', 'tb_detail_pupuh.bait_pupuh', 'tb_detail_sekar_agung.bait_sekar_agung','tb_detail_lagu_anak.bait_lagu')
+                    ->select ('tb_post.id_post', 'tb_post.id_kategori' , 'tb_kategori.nama_kategori', 
+                    'tb_post.nama_post', 'tb_post.gambar', 
+                    'tb_detil_post.id_tag','tb_tag.nama_tag', 'tb_detail_kidung.bait_kidung', 
+                    'tb_detail_pupuh.bait_pupuh', 'tb_detail_sekar_agung.bait_sekar_agung',
+                    'tb_detail_lagu_anak.bait_lagu',)
                     ->where('tb_post.is_approved', 1)
                     ->where('tb_detil_post.id_tag', '=', '9')
                     ->orWhere('tb_detil_post.id_tag', '=', '4')
                     ->orWhere('tb_detil_post.id_tag', '=', '10')
                     ->orWhere('tb_detil_post.id_tag', '=', '11')
                     ->distinct()
+                    // ->groupBy('tb_post.nama_post')
                     ->orderBy('tb_post.id_post', 'desc')
                     ->get();
+    
+
         foreach ($datas as $data) {
+            if($data->id_tag == 4){
+                if(isset($data->bait_kidung)){
+                    $bait = $data->bait_kidung;
+                }else{
+                    $bait = "";
+                }
+            }else if($data->id_tag == 9){
+                if(isset($data->bait_lagu)){
+                    $bait = $data->bait_lagu;
+                }else{
+                    $bait = "";
+                }
+            }else if($data->id_tag == 10){
+                if(isset($data->bait_pupuh)){
+                    $bait = $data->bait_pupuh;
+                }else{
+                    $bait = "";
+                }
+            }else if($data->id_tag == 11){
+                if(isset($data->bait_sekar_agung)){
+                    $bait = $data->bait_sekar_agung;
+                }else{
+                    $bait = "";
+                }
+            }
+
             $yadnya[]=(object) array(
                 'id_post'     => $data->id_post,
                 'id_kategori' => $data->id_kategori,
@@ -223,14 +256,11 @@ class DharmagitaController extends Controller
                 'nama_post'   => $data->nama_post,
                 'nama_tag'   => $data->nama_tag,
                 'gambar'      => $data->gambar,
-                'bait_kidung' => $data->bait_kidung,
-                'bait_pupuh' => $data->bait_pupuh,
-                'bait_sekar_agung' => $data->bait_sekar_agung,
-                'bait_lagu' => $data->bait_lagu,
+                'bait' => $bait,
             );
         }
 
-        // return response()->json($yadnya);
+        return response()->json($yadnya);
         if(isset($yadnya)){
             return response()->json($yadnya);
         }else {

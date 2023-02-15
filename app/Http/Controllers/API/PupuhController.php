@@ -475,8 +475,10 @@ class PupuhController extends Controller
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_video));
         $data->gambar_video = $image;
-        $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
-        $data->is_approved = 0;
+        // $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
+        preg_match_all("#(?<=v=|v\/|vi=|vi\/|youtu.be\/)[a-zA-Z0-9_-]{11}#", $request->video, $match);
+        $data->video = implode(" ",$match[0]);
+        $data->is_approved_video = 0;
 
         if($data->save()){
             return response()->json([
@@ -497,7 +499,8 @@ class PupuhController extends Controller
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_video));
         $data->gambar_video = $image;
-        $data->video        = preg_replace("#.*youtu\.be/#", "", $request->video);
+        preg_match_all("#(?<=v=|v\/|vi=|vi\/|youtu.be\/)[a-zA-Z0-9_-]{11}#", $request->video, $match);
+        $data->video = implode(" ",$match[0]);
 
         if($data->save()){
             return response()->json([
@@ -534,17 +537,23 @@ class PupuhController extends Controller
     }
 
     public function addAudioToPupuh(Request $request, $id_post){
+        $audio = $request->file('part');
+        $destinationPath = 'audioku';
+        $name_audio = $request->name_audio .'.'. $audio->getClientOriginalExtension();
+        $audio->move(public_path($destinationPath), $name_audio);
+
         $data = new M_Audio;
         $data->id_dharmagita = $id_post;
         $data->judul_audio  = $request->judul_audio;
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
         $data->gambar_audio = $image;
-        $audio = time().'.mp3';
-        file_put_contents('audioku/'.$audio,base64_decode($request->audio));
-        $data->audio = $audio;
+        // $audio = time().'.mp3';
+        // file_put_contents('audioku/'.$audio,base64_decode($request->audio));
+        // $data->audio = $audio;
+        $data->audio = $name_audio;
         // $data->audio        = $request->audio;
-        $data->is_approved = 0;
+        $data->is_approved_audio = 0;
 
         if($data->save()){
             return response()->json([
@@ -560,11 +569,16 @@ class PupuhController extends Controller
     }
 
     public function updateAudioPupuh(Request $request, $id_post){
+        $audio = $request->file('part');
+        $destinationPath = 'audioku';
+        $name_audio = $request->name_audio .'.'. $audio->getClientOriginalExtension();
+        $audio->move(public_path($destinationPath), $name_audio);
+
         $data = M_Audio::where('id_audio', $id_post)->first();
         $data->judul_audio  = $request->judul_audio;
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
-        $data->gambar_audio = $image;
+        $data->gambar_audio = $name_audio;
         $data->audio        = $request->audio;
 
         if($data->save()){
