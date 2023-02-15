@@ -426,13 +426,18 @@ class KidungController extends Controller
     }
 
     public function addAudioToKidungAdmin(Request $request, $id_post){
+        $audio = $request->file('part');
+        $destinationPath = 'audioku';
+        $name_audio = $request->name_audio .'.'. $audio->getClientOriginalExtension();
+        $audio->move(public_path($destinationPath), $name_audio);
+
         $data = new M_Audio;
         $data->id_dharmagita = $id_post;
         $data->judul_audio  = $request->judul_audio;
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
         $data->gambar_audio = $image;
-        $data->audio        = $request->audio;
+         $data->audio = $name_audio;
         $data->is_approved_audio = 0;
 
         if($data->save()){
@@ -449,12 +454,17 @@ class KidungController extends Controller
     }
 
     public function updateAudioKidungAdmin(Request $request, $id_post){
+        $audio = $request->file('part');
+        $destinationPath = 'audioku';
+        $name_audio = $request->name_audio .'.'. $audio->getClientOriginalExtension();
+        $audio->move(public_path($destinationPath), $name_audio);
+
         $data = M_Audio::where('id_audio', $id_post)->first();
         $data->judul_audio  = $request->judul_audio;
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
         $data->gambar_audio = $image;
-        $data->audio        = $request->audio;
+        $data->audio = $name_audio;
 
         if($data->save()){
             return response()->json([

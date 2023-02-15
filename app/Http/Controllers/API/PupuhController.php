@@ -578,8 +578,8 @@ class PupuhController extends Controller
         $data->judul_audio  = $request->judul_audio;
         $image = time().'.jpg';
         file_put_contents('gambarku/'.$image,base64_decode($request->gambar_audio));
-        $data->gambar_audio = $name_audio;
-        $data->audio        = $request->audio;
+        $data->gambar_audio = $image;
+        $data->audio        = $name_audio;
 
         if($data->save()){
             return response()->json([
