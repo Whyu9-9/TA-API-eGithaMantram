@@ -84,6 +84,11 @@ class AuthAdminController extends Controller
     }
 
     public function registerAhli (Request $request){
+        $file = $request->file('part');
+        $destinationPath = 'fileAhli';
+        $name_file = $request->name_file .'.'. $file->getClientOriginalExtension();
+        $file->move(public_path($destinationPath), $name_file);
+
         $data              = new M_User;
         $data->email       = $request->email;
         $data->password       =bcrypt($request->password);
@@ -92,7 +97,8 @@ class AuthAdminController extends Controller
         $data->is_approved  = 0;
         // $fileAhli = time().'.pdf';
         // file_put_contents('fileAhli/'.$fileAhli,base64_decode($request->file));
-        $data->file  = $request->file;
+        // $data->file  = $request->file;
+        $data->file = $name_file;
         if($data ->save()){
             return response()->json([
                 'status' => 200,
